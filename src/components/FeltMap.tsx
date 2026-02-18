@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Resort, Filters } from "@/types";
 
 const FELT_MAP_ID = process.env.NEXT_PUBLIC_FELT_MAP_ID;
@@ -30,11 +30,24 @@ type FeltFilter =
   | null;
 
 /* ── Minimal Felt SDK controller type ─────────────────────── */
+interface FeltLayer {
+  id: string;
+  name: string;
+  status: string;
+}
+
+interface FeltFeature {
+  id: string | number;
+  properties: Record<string, unknown>;
+}
+
 interface FeltController {
   setViewport(opts: {
     center: { latitude: number; longitude: number };
     zoom: number;
   }): Promise<void>;
+  getLayer(id: string): Promise<FeltLayer | null>;
+  getLayers(): Promise<Array<FeltLayer | null>>;
   setLayerFilters(params: {
     layerId: string;
     filters: FeltFilter;
@@ -44,10 +57,8 @@ interface FeltController {
     layerId: string;
     limit?: number;
   }): Promise<{
-    features: Array<{
-      id: string | number;
-      properties: Record<string, unknown>;
-    }>;
+    features: FeltFeature[];
+    count: number;
   }>;
   selectFeature(params: {
     id: string | number;
@@ -55,6 +66,10 @@ interface FeltController {
     showPopup?: boolean;
     fitViewport?: boolean | { maxZoom: number };
   }): Promise<void>;
+  onLayerChange(args: {
+    options: { id: string };
+    handler: (change: unknown) => void;
+  }): () => void;
 }
 
 /* ── Props ────────────────────────────────────────────────── */
@@ -102,6 +117,22 @@ function buildFeltFilter(filters: Filters): FeltFilter {
   return result;
 }
 
+/* ── Retry helper ─────────────────────────────────────────── */
+async function retry<T>(
+  fn: () => Promise<T>,
+  { attempts = 5, delay = 1500 }: { attempts?: number; delay?: number } = {},
+): Promise<T> {
+  for (let i = 0; i < attempts; i++) {
+    try {
+      return await fn();
+    } catch {
+      if (i === attempts - 1) throw new Error("Retry exhausted");
+      await new Promise((r) => setTimeout(r, delay));
+    }
+  }
+  throw new Error("Retry exhausted");
+}
+
 /* ── Component ────────────────────────────────────────────── */
 export function FeltMap({ filters, selectedResort }: FeltMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -109,8 +140,9 @@ export function FeltMap({ filters, selectedResort }: FeltMapProps) {
   const featureLookupRef = useRef<Map<string, string | number>>(new Map());
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [layerReady, setLayerReady] = useState(false);
 
-  // Embed the Felt map
+  // Embed the Felt map and wait for layer readiness
   useEffect(() => {
     if (!FELT_MAP_ID || !containerRef.current) {
       if (!FELT_MAP_ID) setError("NEXT_PUBLIC_FELT_MAP_ID not set");
@@ -132,29 +164,55 @@ export function FeltMap({ filters, selectedResort }: FeltMapProps) {
 
         const controller = map as unknown as FeltController;
         feltRef.current = controller;
+        setIsLoading(false);
 
-        // Build resort-name → feature-id lookup for selectFeature
+        // Wait for the data layer to be available
         if (FELT_LAYER_ID) {
+          console.log("[FeltMap] Layer ID:", FELT_LAYER_ID);
+
+          // Poll for layer readiness
+          const layer = await retry(
+            async () => {
+              const l = await controller.getLayer(FELT_LAYER_ID!);
+              if (!l) throw new Error("Layer not found yet");
+              console.log("[FeltMap] Layer found:", l.name, l.status);
+              return l;
+            },
+            { attempts: 10, delay: 2000 },
+          );
+
+          if (cancelled) return;
+          console.log("[FeltMap] Layer ready:", layer.name);
+
+          // Build resort-name → feature-id lookup
           try {
-            const { features } = await controller.getFeatures({
-              layerId: FELT_LAYER_ID,
+            const { features, count } = await controller.getFeatures({
+              layerId: FELT_LAYER_ID!,
               limit: 200,
             });
+            console.log(
+              "[FeltMap] Features loaded:",
+              count,
+              "features, first:",
+              features[0],
+            );
+
             const lookup = new Map<string, string | number>();
             for (const f of features) {
               const name = f.properties?.name as string;
               if (name) lookup.set(name, f.id);
             }
             featureLookupRef.current = lookup;
+            console.log("[FeltMap] Feature lookup built:", lookup.size, "entries");
           } catch (e) {
-            console.warn("Could not build feature lookup:", e);
+            console.warn("[FeltMap] getFeatures failed:", e);
           }
-        }
 
-        setIsLoading(false);
+          if (!cancelled) setLayerReady(true);
+        }
       } catch (err) {
         if (cancelled) return;
-        console.error("Failed to embed Felt map:", err);
+        console.error("[FeltMap] Failed to embed Felt map:", err);
         setError("Failed to load map. Using iframe fallback.");
         setIsLoading(false);
       }
@@ -168,20 +226,30 @@ export function FeltMap({ filters, selectedResort }: FeltMapProps) {
 
   // Apply sidebar filters to the data layer
   useEffect(() => {
-    if (!feltRef.current || !FELT_LAYER_ID) return;
+    if (!feltRef.current || !FELT_LAYER_ID || !layerReady) return;
 
     const feltFilter = buildFeltFilter(filters);
+    console.log("[FeltMap] Applying filter:", JSON.stringify(feltFilter));
+
     feltRef.current
       .setLayerFilters({ layerId: FELT_LAYER_ID, filters: feltFilter })
-      .catch((err) => console.warn("setLayerFilters error:", err));
-  }, [filters]);
+      .then(() => console.log("[FeltMap] Filter applied"))
+      .catch((err) => console.warn("[FeltMap] setLayerFilters error:", err));
+  }, [filters, layerReady]);
 
   // Select feature + open popup on resort click
   useEffect(() => {
     if (!feltRef.current || !selectedResort) return;
 
-    if (FELT_LAYER_ID) {
+    if (FELT_LAYER_ID && layerReady) {
       const featureId = featureLookupRef.current.get(selectedResort.name);
+      console.log(
+        "[FeltMap] Selecting resort:",
+        selectedResort.name,
+        "→ featureId:",
+        featureId,
+      );
+
       if (featureId != null) {
         feltRef.current
           .selectFeature({
@@ -190,7 +258,8 @@ export function FeltMap({ filters, selectedResort }: FeltMapProps) {
             showPopup: true,
             fitViewport: { maxZoom: 10 },
           })
-          .catch((err) => console.warn("selectFeature error:", err));
+          .then(() => console.log("[FeltMap] Feature selected"))
+          .catch((err) => console.warn("[FeltMap] selectFeature error:", err));
         return;
       }
     }
@@ -205,7 +274,7 @@ export function FeltMap({ filters, selectedResort }: FeltMapProps) {
         zoom: 10,
       })
       .catch(() => {});
-  }, [selectedResort]);
+  }, [selectedResort, layerReady]);
 
   // No map ID configured
   if (!FELT_MAP_ID) {
