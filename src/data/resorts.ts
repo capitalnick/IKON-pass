@@ -211,6 +211,7 @@ export const resorts: Resort[] = [
     longitude: 11.8,
     isNew: false,
     notes: "Shared day bank across all Dolomiti Superski areas",
+    imageUrl: "https://www.dolomitisuperski.com/.imaging/mte/dolomitisuperski/654x484/dam/dss/comprensori/san-martino-di-castrozza-passo-rolle/winter/san-martino-di-castrozza-ph-dolomites-web-archivio-visitsanmartino.jpg/jcr:content/san-martino-di-castrozza-ph-dolomites%20web-archivio%20visitsanmartino.jpg",
   },
   {
     id: "rio-pusteria",
@@ -501,6 +502,7 @@ export const resorts: Resort[] = [
     isNew: false,
     notes:
       "Not on Base Pass. Beginner/family mountain adjacent to Sun Valley",
+    imageUrl: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/c4/b7/97/caption.jpg?w=900&h=500&s=1",
   },
   {
     id: "alyeska",
@@ -530,6 +532,7 @@ export const resorts: Resort[] = [
     longitude: -121.47,
     isNew: false,
     notes: "",
+    imageUrl: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/29/13/d7/exterior.jpg?w=900&h=500&s=1",
   },
   {
     id: "alpental",
@@ -774,6 +777,7 @@ export const resorts: Resort[] = [
     longitude: -105.44,
     isNew: false,
     notes: "",
+    imageUrl: "https://cdn.skimag.com/wp-content/uploads/2025/03/01.21.23_Base-Area_-4-scaled.jpg?width=3840&auto=webp&quality=75&fit=cover",
   },
   {
     id: "deer-valley",
@@ -788,6 +792,7 @@ export const resorts: Resort[] = [
     longitude: -111.48,
     isNew: false,
     notes: "",
+    imageUrl: "https://www.skiutah.com/files/subblob/service/images.listing.size.large/1072140570",
   },
   {
     id: "solitude",
@@ -847,6 +852,7 @@ export const resorts: Resort[] = [
     longitude: -111.65,
     isNew: false,
     notes: "Not on Base Pass. Shared day bank with Alta",
+    imageUrl: "https://www.snowbird.com/_bluedrop/images/sites/default/files/2025-10/1.27.25.Otto-35_snowbird_hompeage_aerial-tram_1000x667.jpg?u=aHR0cHM6Ly9jbXMuc25vd2JpcmQuY29tL3NpdGVzL2RlZmF1bHQvZmlsZXMvMjAyNS0xMC8xLjI3LjI1Lk90dG8tMzVfc25vd2JpcmRfaG9tcGVhZ2VfYWVyaWFsLXRyYW1fMTAwMHg2NjcuanBn&d=6d225a1ee810369e9a192dded4414b15&q=75&w=1000&h=667",
   },
   {
     id: "snowbasin",
@@ -951,6 +957,7 @@ export const resorts: Resort[] = [
     longitude: -72.83,
     isNew: false,
     notes: "Sister mountain to Killington",
+    imageUrl: "https://media.vrbo.com/lodging/34000000/33700000/33691300/33691210/b1fb9c79.jpg?impolicy=resizecrop&rw=575&rh=575&ra=fill",
   },
   {
     id: "snowshoe",
@@ -1025,6 +1032,7 @@ export const resorts: Resort[] = [
     longitude: -75.35,
     isNew: false,
     notes: "",
+    imageUrl: "https://momonthemap.com/wp-content/uploads/2017/02/SKi-In_Ski-Out_Lodge.jpeg",
   },
   {
     id: "blue-mountain-pa",
@@ -1132,6 +1140,7 @@ export const resorts: Resort[] = [
     longitude: -117.76,
     isNew: false,
     notes: "",
+    imageUrl: "https://static.ffx.io/images/$zoom_1%2C$multiply_0.3283%2C$ratio_1.777778%2C$width_1779%2C$x_21%2C$y_122/t_crop_custom/q_86%2Cf_auto/c1fab7c067e57f63a2a8419b2382b2032e681946",
   },
   {
     id: "panorama",
@@ -1343,6 +1352,7 @@ export const resorts: Resort[] = [
     isNew: true,
     notes:
       "New 25/26. 18 interconnected areas. Days are combined total across all areas.",
+    imageUrl: "https://www.japan-guide.com/g18/6026_01.jpg",
   },
   {
     id: "mt-t",
