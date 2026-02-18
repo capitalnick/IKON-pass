@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Resort, Filters } from "@/types";
+import { resorts as allResorts } from "@/data/resorts";
 
 const FELT_MAP_ID = process.env.NEXT_PUBLIC_FELT_MAP_ID;
 
@@ -40,6 +41,17 @@ interface FeltFeature {
   properties: Record<string, unknown>;
 }
 
+interface FeltClickFeature {
+  id: string | number;
+  layerId: string;
+  properties: Record<string, unknown>;
+}
+
+interface FeltClickEvent {
+  coordinate: { latitude: number; longitude: number };
+  features: FeltClickFeature[];
+}
+
 interface FeltController {
   setViewport(opts: {
     center: { latitude: number; longitude: number };
@@ -64,12 +76,16 @@ interface FeltController {
     showPopup?: boolean;
     fitViewport?: boolean | { maxZoom: number };
   }): Promise<void>;
+  onPointerClick(params: {
+    handler: (event: FeltClickEvent) => void;
+  }): () => void;
 }
 
 /* ── Props ────────────────────────────────────────────────── */
 interface FeltMapProps {
   filters: Filters;
   selectedResort: Resort | null;
+  onResortSelect?: (resort: Resort) => void;
 }
 
 /* ── Build Felt-compatible filter from sidebar state ──────── */
@@ -111,12 +127,21 @@ function buildFeltFilter(filters: Filters): FeltFilter {
   return result;
 }
 
+/* ── Resort name → Resort lookup ──────────────────────────── */
+const resortByName = new Map<string, Resort>();
+for (const r of allResorts) {
+  resortByName.set(r.name, r);
+}
+
 /* ── Component ────────────────────────────────────────────── */
-export function FeltMap({ filters, selectedResort }: FeltMapProps) {
+export function FeltMap({ filters, selectedResort, onResortSelect }: FeltMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const feltRef = useRef<FeltController | null>(null);
   const layerIdRef = useRef<string | null>(null);
   const featureLookupRef = useRef<Map<string, string | number>>(new Map());
+  const onResortSelectRef = useRef(onResortSelect);
+  onResortSelectRef.current = onResortSelect;
+  const unsubClickRef = useRef<(() => void) | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [layerReady, setLayerReady] = useState(false);
@@ -206,6 +231,25 @@ export function FeltMap({ filters, selectedResort }: FeltMapProps) {
           console.warn("[FeltMap] getFeatures failed:", e);
         }
 
+        // Listen for marker clicks → resolve to Resort and notify parent
+        unsubClickRef.current = controller.onPointerClick({
+          handler: (event) => {
+            const clickedFeature = event.features.find(
+              (f) => f.layerId === dataLayerId,
+            );
+            if (!clickedFeature) return;
+
+            const name = clickedFeature.properties?.name as string | undefined;
+            if (!name) return;
+
+            const resort = resortByName.get(name);
+            if (resort) {
+              console.log("[FeltMap] Marker clicked:", name);
+              onResortSelectRef.current?.(resort);
+            }
+          },
+        });
+
         if (!cancelled) setLayerReady(true);
       } catch (err) {
         if (cancelled) return;
@@ -218,6 +262,7 @@ export function FeltMap({ filters, selectedResort }: FeltMapProps) {
     embedMap();
     return () => {
       cancelled = true;
+      unsubClickRef.current?.();
     };
   }, []);
 
@@ -254,7 +299,7 @@ export function FeltMap({ filters, selectedResort }: FeltMapProps) {
           .selectFeature({
             id: featureId,
             layerId,
-            showPopup: true,
+            showPopup: false,
             fitViewport: { maxZoom: 10 },
           })
           .then(() => console.log("[FeltMap] Feature selected"))

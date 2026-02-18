@@ -95,7 +95,7 @@ export function MapLayout() {
           </button>
         )}
 
-        <FeltMap filters={filters} selectedResort={selectedResort} />
+        <FeltMap filters={filters} selectedResort={selectedResort} onResortSelect={handleResortClick} />
 
         {/* Resort detail panel overlay */}
         {selectedResort && (
