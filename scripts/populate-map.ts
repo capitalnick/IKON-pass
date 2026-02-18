@@ -187,6 +187,7 @@ function buildGeoJSON(batch: ResortData[]) {
       const props: Record<string, string> = {
         "felt:color": COLOR_MAP[resort.colorGroup] ?? "#888888",
         "felt:label": resort.isNew ? `✦ ${resort.name}` : resort.name,
+        name: resort.name,
         "Ikon Group": resort.colorGroup,
         "Group/Collective": resort.group,
         "Full Pass Days": resort.fullPassDays,

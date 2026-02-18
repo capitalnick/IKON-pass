@@ -5,6 +5,7 @@ import { resorts } from "@/data/resorts";
 import { Filters, Resort } from "@/types";
 import { Sidebar } from "./Sidebar";
 import { FeltMap } from "./FeltMap";
+import { ResortDetailPanel } from "./ResortDetailPanel";
 
 const defaultFilters: Filters = {
   macroRegions: [],
@@ -95,6 +96,15 @@ export function MapLayout() {
         )}
 
         <FeltMap filters={filters} selectedResort={selectedResort} />
+
+        {/* Resort detail panel overlay */}
+        {selectedResort && (
+          <ResortDetailPanel
+            resort={selectedResort}
+            onClose={() => setSelectedResort(null)}
+            onNavigate={(r) => setSelectedResort(r)}
+          />
+        )}
       </div>
     </div>
   );
