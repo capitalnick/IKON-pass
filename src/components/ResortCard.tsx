@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Resort, COLOR_MAP } from "@/types";
 import { resorts as allResorts } from "@/data/resorts";
+import { wikiThumb } from "@/lib/wikiThumb";
 import {
   Mountain,
   MapPin,
@@ -89,7 +90,7 @@ export function ResortCard({
         <div className="h-14 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-surface-card">
           {resort.imageUrl && !imgError ? (
             <img
-              src={resort.imageUrl}
+              src={wikiThumb(resort.imageUrl, 200)}
               alt={resort.name}
               className="h-full w-full object-cover"
               loading="lazy"

@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef, useLayoutEffect } from "react";
 import { Resort, COLOR_MAP } from "@/types";
 import { resorts as allResorts } from "@/data/resorts";
+import { wikiThumb } from "@/lib/wikiThumb";
 import {
   Mountain,
   MapPin,
@@ -213,7 +214,7 @@ export function ResortDetailPanel({
         <div className="relative h-44 overflow-hidden rounded-t-xl bg-surface">
           {resort.imageUrl && !imgError ? (
             <img
-              src={resort.imageUrl}
+              src={wikiThumb(resort.imageUrl, 800)}
               alt={resort.name}
               className="h-full w-full object-cover"
               onError={() => setImgError(true)}
