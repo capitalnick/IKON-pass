@@ -157,37 +157,85 @@ async function feltRequest(path: string, options: RequestInit = {}): Promise<Res
   return res;
 }
 
+// Build shared bank lookup: group name → list of resort names
+const sharedBankMap: Record<string, string[]> = {};
+const groupCounts: Record<string, number> = {};
+for (const r of resorts) {
+  if (r.group !== "Individual") {
+    groupCounts[r.group] = (groupCounts[r.group] ?? 0) + 1;
+  }
+}
+for (const r of resorts) {
+  if (r.group !== "Individual" && (groupCounts[r.group] ?? 0) > 1) {
+    if (!sharedBankMap[r.group]) sharedBankMap[r.group] = [];
+    sharedBankMap[r.group].push(r.name);
+  }
+}
+
+function getSharedBankLabel(resort: ResortData): string | null {
+  const bank = sharedBankMap[resort.group];
+  if (!bank || bank.length <= 1) return null;
+  const others = bank.filter((n) => n !== resort.name);
+  return others.join(", ");
+}
+
 function buildGeoJSON(batch: ResortData[]) {
   return {
     type: "FeatureCollection" as const,
-    features: batch.map((resort) => ({
-      type: "Feature" as const,
-      geometry: {
-        type: "Point" as const,
-        coordinates: [resort.longitude, resort.latitude],
-      },
-      properties: {
+    features: batch.map((resort) => {
+      const sharedBank = getSharedBankLabel(resort);
+      const props: Record<string, string> = {
         "felt:color": COLOR_MAP[resort.colorGroup] ?? "#888888",
         "felt:label": resort.isNew ? `✦ ${resort.name}` : resort.name,
-        "Resort Name": resort.name,
-        Country: resort.country,
-        Region: resort.macroRegion,
-        "Color Group": resort.colorGroup,
+        "Ikon Group": resort.colorGroup,
         "Group/Collective": resort.group,
         "Full Pass Days": resort.fullPassDays,
         "Base Pass Days": resort.basePassDays,
         "New 25/26": resort.isNew ? "Yes" : "No",
-        Notes: resort.notes || "—",
-      },
-    })),
+        Powderhounds: `https://www.google.com/search?q=${encodeURIComponent(`powderhounds ${resort.name} ski resort`)}&btnI`,
+      };
+      if (resort.notes) props["Notes"] = resort.notes;
+      if (sharedBank) props["Shared Day Bank"] = sharedBank;
+
+      return {
+        type: "Feature" as const,
+        geometry: {
+          type: "Point" as const,
+          coordinates: [resort.longitude, resort.latitude],
+        },
+        properties: props,
+      };
+    }),
   };
+}
+
+async function deleteExistingElements(mapId: string) {
+  console.log("  Fetching existing elements...");
+  const res = await feltRequest(`/maps/${mapId}/elements`);
+  const data = await res.json();
+  const features = data?.features ?? [];
+  if (features.length === 0) {
+    console.log("  No existing elements to delete.");
+    return;
+  }
+
+  console.log(`  Deleting ${features.length} existing elements...`);
+  for (const feature of features) {
+    const id = feature.id ?? feature.properties?.id;
+    if (id) {
+      await feltRequest(`/maps/${mapId}/elements/${id}`, { method: "DELETE" });
+    }
+  }
+  console.log("  ✓ Cleared.\n");
 }
 
 async function main() {
   const mapId = process.env.FELT_MAP_ID || process.env.NEXT_PUBLIC_FELT_MAP_ID;
   if (!mapId) throw new Error("FELT_MAP_ID or NEXT_PUBLIC_FELT_MAP_ID env var is required");
 
-  console.log(`\nPopulating map ${mapId} with ${resorts.length} resorts...\n`);
+  console.log(`\nUpdating map ${mapId} with ${resorts.length} resorts...\n`);
+
+  await deleteExistingElements(mapId);
 
   const BATCH_SIZE = 50;
   for (let i = 0; i < resorts.length; i += BATCH_SIZE) {
@@ -200,7 +248,7 @@ async function main() {
     });
   }
 
-  console.log(`\n✅ All ${resorts.length} resorts added to map.\n`);
+  console.log(`\n✅ All ${resorts.length} resorts updated on map.\n`);
 }
 
 main().catch((err) => {

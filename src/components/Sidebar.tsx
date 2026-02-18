@@ -120,10 +120,10 @@ export function Sidebar({
           </div>
         </div>
 
-        {/* Color Group */}
+        {/* Ikon Group */}
         <div>
           <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-muted">
-            Color Group
+            Ikon Group
           </label>
           <div className="flex flex-wrap gap-1.5">
             {colorGroups.map((group) => (
@@ -223,6 +223,7 @@ export function Sidebar({
                 resort={resort}
                 isSelected={selectedResort?.id === resort.id}
                 onClick={() => onResortClick(resort)}
+                onNavigate={onResortClick}
               />
             ))}
           </div>
