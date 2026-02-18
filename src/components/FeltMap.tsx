@@ -93,6 +93,10 @@ interface FeltController {
   onViewportMoveEnd(params: {
     handler: (viewport: FeltViewportState) => void;
   }): () => void;
+  clearSelection(params?: {
+    features?: boolean;
+    elements?: boolean;
+  }): Promise<void>;
 }
 
 /* ── Props ────────────────────────────────────────────────── */
@@ -285,6 +289,8 @@ export function FeltMap({
             const resort = resortByName.get(name);
             if (resort) {
               console.log("[FeltMap] Marker clicked:", name);
+              // Dismiss Felt's native popup immediately
+              controller.clearSelection({ features: true }).catch(() => {});
               onResortSelectRef.current?.(resort);
             }
           },
