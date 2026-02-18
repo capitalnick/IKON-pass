@@ -94,7 +94,7 @@ export function MapLayout() {
           </button>
         )}
 
-        <FeltMap selectedResort={selectedResort} />
+        <FeltMap filters={filters} selectedResort={selectedResort} />
       </div>
     </div>
   );
