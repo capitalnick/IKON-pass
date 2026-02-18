@@ -15,6 +15,7 @@ export const resorts: Resort[] = [
     isNew: false,
     notes:
       "Includes Grandvalira, Ordino Arcalís and Pal Arinsal. Largest ski area in the Pyrenees.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/c/c1/AndorraSoldeuView.JPG",
   },
   {
     id: "kitzbuhel",
@@ -75,6 +76,7 @@ export const resorts: Resort[] = [
     longitude: 6.61,
     isNew: true,
     notes: "New 25/26 addition. No blackout dates.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Village_%40_Rochebrune_%40_Meg%C3%A8ve_%2851037436052%29.jpg",
   },
   {
     id: "cortina",
@@ -134,6 +136,7 @@ export const resorts: Resort[] = [
     longitude: 11.71,
     isNew: false,
     notes: "Shared day bank across all Dolomiti Superski areas",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/3/39/Val_Gardena.jpg",
   },
   {
     id: "val-di-fassa",
@@ -178,6 +181,7 @@ export const resorts: Resort[] = [
     longitude: 12.25,
     isNew: false,
     notes: "Tre Cime area. Shared day bank across all Dolomiti Superski areas",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/4/4f/2019_Tre_Cime.jpg",
   },
   {
     id: "val-di-fiemme",
@@ -192,6 +196,7 @@ export const resorts: Resort[] = [
     longitude: 11.37,
     isNew: false,
     notes: "Shared day bank across all Dolomiti Superski areas",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/a/aa/Cavalese.jpg",
   },
   {
     id: "san-martino",
@@ -220,6 +225,7 @@ export const resorts: Resort[] = [
     longitude: 11.58,
     isNew: false,
     notes: "Shared day bank across all Dolomiti Superski areas",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/3/31/Brixen_Dom_Mari%C3%A4_Himmelfahrt_%28BD_14187_3_05-2015%29.jpg",
   },
   {
     id: "alpe-lusia",
@@ -249,6 +255,7 @@ export const resorts: Resort[] = [
     longitude: 12.07,
     isNew: false,
     notes: "Shared day bank across all Dolomiti Superski areas",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/9/91/Monte_Civetta_Caprile.jpg",
   },
   {
     id: "cervino",
@@ -264,6 +271,7 @@ export const resorts: Resort[] = [
     isNew: true,
     notes:
       "New 25/26. Also known as Cervinia/Valtournenche. Shared 7-day bank across all Valle d'Aosta resorts.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/9/92/CervinoAug252023_03.jpg",
   },
   {
     id: "courmayeur",
@@ -295,6 +303,7 @@ export const resorts: Resort[] = [
     isNew: true,
     notes:
       "New 25/26. Shared 7-day bank across all Valle d'Aosta resorts.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/2/22/Panorama_La_Thuile_da_Chaz_Dura.jpg",
   },
   {
     id: "monterosa",
@@ -401,6 +410,7 @@ export const resorts: Resort[] = [
     longitude: -118.95,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/1/17/Ritter_Range_and_Mammoth_Mountain.jpg",
   },
   {
     id: "june-mountain",
@@ -415,6 +425,7 @@ export const resorts: Resort[] = [
     longitude: -119.09,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/2/2d/June_Mountain_skiing.jpg",
   },
   {
     id: "bear-mountain",
@@ -459,6 +470,7 @@ export const resorts: Resort[] = [
     longitude: -117.03,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/1/17/Snow_Valley_CA_2010_1.jpg",
   },
   {
     id: "sun-valley",
@@ -473,6 +485,7 @@ export const resorts: Resort[] = [
     longitude: -114.35,
     isNew: false,
     notes: "Not on Base Pass",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/d/da/Baldmountainid.jpg",
   },
   {
     id: "dollar-mountain",
@@ -502,6 +515,7 @@ export const resorts: Resort[] = [
     longitude: -149.09,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/b/b8/Girdwood_Valley.jpg",
   },
   {
     id: "crystal-mountain",
@@ -576,6 +590,7 @@ export const resorts: Resort[] = [
     longitude: -116.62,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/f/f5/Sandpoint_Idaho_from_Schweitzer.jpg",
   },
   {
     id: "aspen-mountain",
@@ -744,6 +759,7 @@ export const resorts: Resort[] = [
     longitude: -111.4,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/1/16/Lone_Mountain_Sunset_%2832727260230%29.jpg",
   },
   {
     id: "taos",
@@ -816,6 +832,7 @@ export const resorts: Resort[] = [
     longitude: -111.64,
     isNew: false,
     notes: "Not on Base Pass. Shared day bank with Snowbird",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/5/53/Alta_ski_lessons_-_Feb_21%2C_2011.jpg",
   },
   {
     id: "snowbird",
@@ -889,6 +906,7 @@ export const resorts: Resort[] = [
     longitude: -72.91,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/2/23/Mount_Snow_ski_aerial.jpg",
   },
   {
     id: "sugarbush",
@@ -947,6 +965,7 @@ export const resorts: Resort[] = [
     longitude: -79.99,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/4/44/The_Village_at_Snowshoe.jpg",
   },
   {
     id: "sunday-river",
@@ -961,6 +980,7 @@ export const resorts: Resort[] = [
     longitude: -70.85,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/c/cf/Newry_ME.JPG",
   },
   {
     id: "sugarloaf",
@@ -975,6 +995,7 @@ export const resorts: Resort[] = [
     longitude: -70.31,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/a/ab/Sugarloaf_Mt_seen_from_AT_above_Crocker_Cirque.jpg",
   },
   {
     id: "loon",
@@ -989,6 +1010,7 @@ export const resorts: Resort[] = [
     longitude: -71.62,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/e/e9/Loon_Mountain_NH_from_Flume.jpg",
   },
   {
     id: "camelback",
@@ -1049,6 +1071,7 @@ export const resorts: Resort[] = [
     isNew: false,
     notes:
       "Shared 7-day bank across all SkiBig3 resorts. Blackout dates on Base Pass.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/b/b3/Lake_Louise_in_Banff_National_Park%2C_boat_view_2.jpg",
   },
   {
     id: "mount-norquay",
@@ -1123,6 +1146,7 @@ export const resorts: Resort[] = [
     longitude: -116.24,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/f/f2/Invermere_bc.jpg",
   },
   {
     id: "sun-peaks",
@@ -1212,6 +1236,7 @@ export const resorts: Resort[] = [
     longitude: 148.3,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/e/ee/KozNatParkSnowyRiver.jpg",
   },
   {
     id: "mt-buller",
@@ -1302,6 +1327,7 @@ export const resorts: Resort[] = [
     longitude: 138.17,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Myokousan_from_hiutiyama_1996_6_29.jpg",
   },
   {
     id: "shiga-kogen",
@@ -1332,6 +1358,7 @@ export const resorts: Resort[] = [
     isNew: true,
     notes:
       'New 25/26. By Hoshino Resorts, Gunma Prefecture. Highest avg snowfall of new additions (~588"/yr).',
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/e/eb/Tanigawa-dake%2C_October_2007.jpg",
   },
   {
     id: "myoko",
@@ -1346,6 +1373,7 @@ export const resorts: Resort[] = [
     longitude: 138.08,
     isNew: true,
     notes: "New 25/26. 8.5km groomed run. 2hrs from Tokyo.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Myokousan_from_hiutiyama_1996_6_29.jpg",
   },
   {
     id: "appi",
@@ -1390,6 +1418,7 @@ export const resorts: Resort[] = [
     longitude: 140.14,
     isNew: true,
     notes: "New 25/26. Fukushima Prefecture. Views of Lake Inawashiro.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/4/48/Lake_Inawashiro_view_from_Mt.Bandai.jpg",
   },
   {
     id: "zao",
@@ -1420,6 +1449,7 @@ export const resorts: Resort[] = [
     longitude: 115.44,
     isNew: true,
     notes: "New 25/26. 2022 Beijing Winter Olympics venue.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/0d/Golden_forests_at_Chongli_%E5%B4%87%E7%A4%BC%E9%87%91%E7%A7%8B_%288181860966%29.jpg",
   },
   {
     id: "yongpyong",
