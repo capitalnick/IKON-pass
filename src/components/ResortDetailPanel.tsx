@@ -126,14 +126,17 @@ export function ResortDetailPanel({
         absolute z-20
         w-full md:w-[400px]
         bottom-0 md:bottom-4 left-0 md:left-4
-        rounded-t-xl md:rounded-xl
-        border border-border
-        bg-surface shadow-2xl shadow-black/40
-        max-h-[70vh] overflow-y-auto
         transition-all duration-200 ease-out
         ${isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}
       `}
     >
+      {/* Upward-pointing triangle connector to map marker */}
+      <div
+        className="hidden md:block absolute -top-2 left-[30px] w-4 h-4 rotate-45 border-l border-t border-border bg-surface z-10"
+      />
+
+      {/* Card body */}
+      <div className="rounded-t-xl md:rounded-xl border border-border bg-surface shadow-2xl shadow-black/40 max-h-[70vh] overflow-y-auto relative">
       {/* Hero image section */}
       <div className="relative h-44 overflow-hidden rounded-t-xl bg-surface">
         {resort.imageUrl && !imgError ? (
@@ -247,6 +250,7 @@ export function ResortDetailPanel({
           View on Powderhounds
         </a>
       </div>
+      </div>{/* end card body */}
     </div>
   );
 }
