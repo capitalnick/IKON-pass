@@ -29,6 +29,7 @@ export const resorts: Resort[] = [
     longitude: 12.39,
     isNew: false,
     notes: "Includes Kirchberg and Mittersill areas",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/06/Kitzbuehel03.JPG",
   },
   {
     id: "ischgl",
@@ -43,6 +44,7 @@ export const resorts: Resort[] = [
     longitude: 10.29,
     isNew: true,
     notes: "New 25/26. Straddles Austrian/Swiss border with Samnaun",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/5/52/Ischgl_01.jpg",
   },
   {
     id: "chamonix",
@@ -58,6 +60,7 @@ export const resorts: Resort[] = [
     isNew: false,
     notes:
       "Includes Grands Montets, Brévent-Flégère, Les Houches, Balme/Le Tour. Shared day bank.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/1/1f/Chamonix_valley_from_la_Fl%C3%A9g%C3%A8re%2C2010_07.JPG",
   },
   {
     id: "megeve",
@@ -86,6 +89,7 @@ export const resorts: Resort[] = [
     longitude: 12.13,
     isNew: false,
     notes: "Shared day bank across all Dolomiti Superski areas",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/3/36/Faloria_Cortina_d%27Ampezzo_10.jpg",
   },
   {
     id: "kronplatz",
@@ -100,6 +104,7 @@ export const resorts: Resort[] = [
     longitude: 11.94,
     isNew: false,
     notes: "Shared day bank across all Dolomiti Superski areas",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/8/8b/Kronplatz_Suedseite.jpg",
   },
   {
     id: "alta-badia",
@@ -114,6 +119,7 @@ export const resorts: Resort[] = [
     longitude: 11.85,
     isNew: false,
     notes: "Shared day bank across all Dolomiti Superski areas",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Alta_Badia.JPG",
   },
   {
     id: "val-gardena",
@@ -142,6 +148,7 @@ export const resorts: Resort[] = [
     longitude: 11.61,
     isNew: false,
     notes: "Shared day bank across all Dolomiti Superski areas",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/08/Saslonch_y_Sela_da_Mont_de_Seuc_d%27inviern.jpg",
   },
   {
     id: "arabba",
@@ -156,6 +163,7 @@ export const resorts: Resort[] = [
     longitude: 11.88,
     isNew: false,
     notes: "Shared day bank across all Dolomiti Superski areas",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/08/Saslonch_y_Sela_da_Mont_de_Seuc_d%27inviern.jpg",
   },
   {
     id: "3-peaks",
@@ -226,6 +234,7 @@ export const resorts: Resort[] = [
     longitude: 11.66,
     isNew: false,
     notes: "Shared day bank across all Dolomiti Superski areas",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/08/Saslonch_y_Sela_da_Mont_de_Seuc_d%27inviern.jpg",
   },
   {
     id: "civetta",
@@ -270,6 +279,7 @@ export const resorts: Resort[] = [
     isNew: true,
     notes:
       "New 25/26. Shared 7-day bank across all Valle d'Aosta resorts.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/1/10/CourmayeurAug052024_01.jpg",
   },
   {
     id: "la-thuile",
@@ -300,6 +310,7 @@ export const resorts: Resort[] = [
     isNew: true,
     notes:
       "New 25/26. 6 interconnected ski areas. Shared 7-day bank across all Valle d'Aosta resorts.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/06/Funifor_Pianalunga.JPG",
   },
   {
     id: "pila",
@@ -315,6 +326,7 @@ export const resorts: Resort[] = [
     isNew: true,
     notes:
       "New 25/26. Shared 7-day bank across all Valle d'Aosta resorts.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/e/e0/LagoChamoleAug022023_02.jpg",
   },
   {
     id: "zermatt",
@@ -329,6 +341,7 @@ export const resorts: Resort[] = [
     longitude: 7.74,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/a/a0/1_zermatt_evening_2022.jpg",
   },
   {
     id: "st-moritz",
@@ -343,6 +356,7 @@ export const resorts: Resort[] = [
     longitude: 9.83,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/06/Exterior_Winter_2016_17_Fotograf_Romano_Salis_%2821%29.jpg",
   },
   {
     id: "palisades-tahoe",
@@ -357,6 +371,7 @@ export const resorts: Resort[] = [
     longitude: -120.24,
     isNew: false,
     notes: "Combined Squaw Valley and Alpine Meadows",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/3/3c/TheVillageatSquawValley-exterior.jpg",
   },
   {
     id: "sierra-at-tahoe",
@@ -371,6 +386,7 @@ export const resorts: Resort[] = [
     longitude: -120.08,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/e/e9/Sierra-at-Tahoe_2.jpg",
   },
   {
     id: "mammoth-mountain",
@@ -413,6 +429,7 @@ export const resorts: Resort[] = [
     longitude: -116.85,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Bear_Mountain%2C_Big_Bear_Lake.jpg",
   },
   {
     id: "snow-summit",
@@ -427,6 +444,7 @@ export const resorts: Resort[] = [
     longitude: -116.89,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/a/a0/Snow_Summit_Ski_Resort.jpg",
   },
   {
     id: "snow-valley",
@@ -513,6 +531,7 @@ export const resorts: Resort[] = [
     isNew: false,
     notes:
       "Part of The Summit at Snoqualmie complex but listed separately on Ikon",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/2/2e/View_from_top_of_Alpental.jpg",
   },
   {
     id: "summit-snoqualmie",
@@ -527,6 +546,7 @@ export const resorts: Resort[] = [
     longitude: -121.41,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/02/Snoqualmie_summit_lodge.jpg",
   },
   {
     id: "mt-bachelor",
@@ -541,6 +561,7 @@ export const resorts: Resort[] = [
     longitude: -121.69,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/0c/Mount_Bachelor_closeup.jpg",
   },
   {
     id: "schweitzer",
@@ -570,6 +591,7 @@ export const resorts: Resort[] = [
     isNew: false,
     notes:
       "Not on Base Pass. Shared 7-day bank across all 4 Aspen Snowmass mountains",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/09/DSCN2976_aspenmountain_e_600.jpg",
   },
   {
     id: "aspen-highlands",
@@ -585,6 +607,7 @@ export const resorts: Resort[] = [
     isNew: false,
     notes:
       "Not on Base Pass. Shared 7-day bank across all 4 Aspen Snowmass mountains",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Lift_1A_on_Aspen_Mountain.jpg",
   },
   {
     id: "buttermilk",
@@ -600,6 +623,7 @@ export const resorts: Resort[] = [
     isNew: false,
     notes:
       "Not on Base Pass. Shared 7-day bank across all 4 Aspen Snowmass mountains",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/4/42/Buttermilk_in_Winter.jpg",
   },
   {
     id: "snowmass",
@@ -615,6 +639,7 @@ export const resorts: Resort[] = [
     isNew: false,
     notes:
       "Not on Base Pass. Shared 7-day bank across all 4 Aspen Snowmass mountains",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Lift_1A_on_Aspen_Mountain.jpg",
   },
   {
     id: "steamboat",
@@ -629,6 +654,7 @@ export const resorts: Resort[] = [
     longitude: -106.8,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Steamboat_springs_ski_resort.jpg",
   },
   {
     id: "winter-park",
@@ -643,6 +669,7 @@ export const resorts: Resort[] = [
     longitude: -105.76,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/f/f6/Winter_Park_Base_Area.JPG",
   },
   {
     id: "copper-mountain",
@@ -657,6 +684,7 @@ export const resorts: Resort[] = [
     longitude: -106.15,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/9/92/Spaulding_Ridge_wildflowers%2C_Copper_Mtn.jpg",
   },
   {
     id: "arapahoe-basin",
@@ -671,6 +699,7 @@ export const resorts: Resort[] = [
     longitude: -105.87,
     isNew: false,
     notes: "Acquired by Alterra 2024",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/9/91/Eastwall.jpg",
   },
   {
     id: "eldora",
@@ -685,6 +714,7 @@ export const resorts: Resort[] = [
     longitude: -105.58,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/2/29/Eldora_Mountain_Ski_Resort_at_Top_of_International.jpg",
   },
   {
     id: "jackson-hole",
@@ -699,6 +729,7 @@ export const resorts: Resort[] = [
     longitude: -110.86,
     isNew: false,
     notes: "Not on Base Pass",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/d/de/Jackson_hole_new_tram.jpg",
   },
   {
     id: "big-sky",
@@ -755,6 +786,7 @@ export const resorts: Resort[] = [
     longitude: -111.59,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/en/f/f7/Solitude-02-2006.jpg",
   },
   {
     id: "brighton",
@@ -769,6 +801,7 @@ export const resorts: Resort[] = [
     longitude: -111.58,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Big_Cottonwood_Canyon%2C_Utah.JPG",
   },
   {
     id: "alta",
@@ -811,6 +844,7 @@ export const resorts: Resort[] = [
     longitude: -111.86,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/d/d6/Basin_1x_blue_sky.jpg",
   },
   {
     id: "highlands-mi",
@@ -825,6 +859,7 @@ export const resorts: Resort[] = [
     longitude: -84.91,
     isNew: false,
     notes: "Harbor Springs, Michigan",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/2/23/HighlandsAtHarborSptings.jpg",
   },
   {
     id: "boyne-mountain",
@@ -839,6 +874,7 @@ export const resorts: Resort[] = [
     longitude: -84.92,
     isNew: false,
     notes: "Boyne Falls, Michigan",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/0b/Boyne_Mountain.JPG",
   },
   {
     id: "stratton",
@@ -867,6 +903,7 @@ export const resorts: Resort[] = [
     longitude: -72.89,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Mt_Ellen%2C_Sugarbush.jpg",
   },
   {
     id: "killington",
@@ -881,6 +918,7 @@ export const resorts: Resort[] = [
     longitude: -72.82,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Killington_Resort_2018-03-18.jpg",
   },
   {
     id: "pico",
@@ -979,6 +1017,7 @@ export const resorts: Resort[] = [
     longitude: -75.49,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/d/dd/Blue_Slopes.JPG",
   },
   {
     id: "banff-sunshine",
@@ -994,6 +1033,7 @@ export const resorts: Resort[] = [
     isNew: false,
     notes:
       "Shared 7-day bank across all SkiBig3 resorts. Blackout dates on Base Pass.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/6/62/Sunshine_Village_06.jpg",
   },
   {
     id: "lake-louise",
@@ -1024,6 +1064,7 @@ export const resorts: Resort[] = [
     isNew: false,
     notes:
       "Shared 7-day bank across all SkiBig3 resorts. Blackout dates on Base Pass.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/3/38/Norquay2.JPG",
   },
   {
     id: "revelstoke",
@@ -1038,6 +1079,7 @@ export const resorts: Resort[] = [
     longitude: -118.17,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/1/16/A_day%27s_skiing_at_spedtacular_Mt_Revelstoke_-_Noth_Americas_biggest_vertical_drop_at_1713m_%285620_ft%29_-_the_mid_mountain_day_lodge_-_%2828620313540%29.jpg",
   },
   {
     id: "cypress",
@@ -1052,6 +1094,7 @@ export const resorts: Resort[] = [
     longitude: -123.2,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/2/21/Cypress-foggy.jpg",
   },
   {
     id: "red-mountain",
@@ -1094,6 +1137,7 @@ export const resorts: Resort[] = [
     longitude: -119.89,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/4/4b/Feb_7_full_moon.jpg_%281%29.jpg",
   },
   {
     id: "tremblant",
@@ -1108,6 +1152,7 @@ export const resorts: Resort[] = [
     longitude: -74.58,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/08/Fall_Colors_of_Mont_Tremblant.jpg",
   },
   {
     id: "le-massif",
@@ -1122,6 +1167,7 @@ export const resorts: Resort[] = [
     longitude: -70.68,
     isNew: true,
     notes: "New 25/26 addition",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/6/66/LeMassifOverhead.jpg",
   },
   {
     id: "blue-mountain-on",
@@ -1136,6 +1182,7 @@ export const resorts: Resort[] = [
     longitude: -80.32,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/2/20/Blue_Mountain_Resort_-_Summer_view.jpg",
   },
   {
     id: "valle-nevado",
@@ -1150,6 +1197,7 @@ export const resorts: Resort[] = [
     longitude: -70.29,
     isNew: false,
     notes: "Andes, near Santiago",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/8/82/Vista_de_Valle_Nevado.jpg",
   },
   {
     id: "thredbo",
@@ -1178,6 +1226,7 @@ export const resorts: Resort[] = [
     longitude: 146.44,
     isNew: false,
     notes: "",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Mt_Buller_Bourke_St_Stevage-2008-28-11.jpg",
   },
   {
     id: "coronet-peak",
@@ -1192,6 +1241,7 @@ export const resorts: Resort[] = [
     longitude: 168.73,
     isNew: false,
     notes: "Shared day bank across all 3 NZ resorts",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/c/c4/Coronet_Peak_in_evening-sep13.jpg",
   },
   {
     id: "remarkables",
@@ -1206,6 +1256,7 @@ export const resorts: Resort[] = [
     longitude: 168.81,
     isNew: false,
     notes: "Shared day bank across all 3 NZ resorts",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/8/86/The_Remarkables_%281126885451%29.jpg",
   },
   {
     id: "mt-hutt",
@@ -1220,6 +1271,7 @@ export const resorts: Resort[] = [
     longitude: 171.53,
     isNew: false,
     notes: "Shared day bank across all 3 NZ resorts",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Mt_Hutt.jpg",
   },
   {
     id: "niseko",
@@ -1235,6 +1287,7 @@ export const resorts: Resort[] = [
     isNew: false,
     notes:
       "Includes Grand Hirafu, Hanazono, Niseko Village and Annupuri. Shared day bank.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/5/59/Niseko_United_Ski_Resort_in_Hokkaido_Japan.jpg",
   },
   {
     id: "arai",
@@ -1307,6 +1360,7 @@ export const resorts: Resort[] = [
     longitude: 141.0,
     isNew: true,
     notes: "New 25/26. Iwate Prefecture, Honshu. 10m+ annual snowfall.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/6/60/Appi_Cable_Cars.jpg",
   },
   {
     id: "furano",
@@ -1321,6 +1375,7 @@ export const resorts: Resort[] = [
     longitude: 142.38,
     isNew: true,
     notes: "New 25/26. Hokkaido. Two zones: Furano and Kitanomine.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/3/3c/Furano_ski.jpg",
   },
   {
     id: "nekoma",
@@ -1350,6 +1405,7 @@ export const resorts: Resort[] = [
     isNew: true,
     notes:
       "New 25/26. Yamagata. Famous for snow monster juhyo trees.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Yamagata-zao_ski_1_%28200712%29.jpg",
   },
   {
     id: "yunding",
@@ -1378,5 +1434,6 @@ export const resorts: Resort[] = [
     longitude: 128.68,
     isNew: true,
     notes: "New 25/26. 2018 Pyeongchang Winter Olympics venue.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/6/6f/Winter_2014_Candidate_City-_PyeongChang_Dragon_Valley_ski_resort.jpg",
   },
 ];
