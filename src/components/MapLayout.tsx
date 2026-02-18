@@ -13,6 +13,7 @@ const defaultFilters: Filters = {
   colorGroups: [],
   passType: "all",
   newOnly: false,
+  noBlackouts: false,
   search: "",
 };
 
@@ -37,6 +38,8 @@ function applyFilters(allResorts: Resort[], filters: Filters): Resort[] {
     }
 
     if (filters.newOnly && !r.isNew) return false;
+
+    if (filters.noBlackouts && r.blackoutDates) return false;
 
     if (filters.passType === "full-only") {
       if (r.fullPassDays === "N/A") return false;

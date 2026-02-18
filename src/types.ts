@@ -11,6 +11,10 @@ export interface Resort {
   longitude: number;
   isNew: boolean;
   notes: string;
+  reservationRequired: boolean;
+  blackoutDates: string;
+  fullPassOnly: boolean;
+  powderhoundsUrl: string | null;
   imageUrl?: string;
 }
 
@@ -19,6 +23,7 @@ export interface Filters {
   colorGroups: string[];
   passType: "all" | "full-only" | "base-included";
   newOnly: boolean;
+  noBlackouts: boolean;
   search: string;
 }
 

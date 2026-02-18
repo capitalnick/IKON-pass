@@ -13,6 +13,10 @@ import {
   Users,
   ExternalLink,
   X,
+  ShieldCheck,
+  CalendarOff,
+  Ticket,
+  CheckCircle,
 } from "lucide-react";
 
 /* ── Helpers (shared logic with ResortCard) ──────────────── */
@@ -283,6 +287,40 @@ export function ResortDetailPanel({
             <PassDayCard label="Base Pass" value={resort.basePassDays} />
           </div>
 
+          {/* Access restrictions */}
+          <div className="mt-3">
+            <div className="flex items-center gap-1.5 text-xs font-medium text-muted mb-2">
+              <ShieldCheck className="h-3.5 w-3.5" />
+              Access
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {resort.reservationRequired && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/10 px-2.5 py-1 text-xs font-medium text-amber-400">
+                  <Ticket className="h-3 w-3" />
+                  Reservation required
+                </span>
+              )}
+              {resort.fullPassOnly && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-rose-500/10 px-2.5 py-1 text-xs font-medium text-rose-400">
+                  <ShieldCheck className="h-3 w-3" />
+                  Full Pass only
+                </span>
+              )}
+              {resort.blackoutDates && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-orange-500/10 px-2.5 py-1 text-xs font-medium text-orange-400">
+                  <CalendarOff className="h-3 w-3" />
+                  Blackouts: {resort.blackoutDates}
+                </span>
+              )}
+              {!resort.reservationRequired && !resort.fullPassOnly && !resort.blackoutDates && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-400">
+                  <CheckCircle className="h-3 w-3" />
+                  No restrictions
+                </span>
+              )}
+            </div>
+          </div>
+
           {/* Notes */}
           {resort.notes && (
             <p className="mt-3 text-sm leading-relaxed text-muted">
@@ -312,15 +350,17 @@ export function ResortDetailPanel({
           )}
 
           {/* Powderhounds link */}
-          <a
-            href={getPowderhoundsUrl(resort)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg border border-border py-2.5 text-sm font-medium text-foreground hover:bg-surface-hover hover:border-ikon/30 transition-colors"
-          >
-            <ExternalLink className="h-4 w-4 text-ikon" />
-            View on Powderhounds
-          </a>
+          {resort.powderhoundsUrl && (
+            <a
+              href={resort.powderhoundsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg border border-border py-2.5 text-sm font-medium text-foreground hover:bg-surface-hover hover:border-ikon/30 transition-colors"
+            >
+              <ExternalLink className="h-4 w-4 text-ikon" />
+              View on Powderhounds
+            </a>
+          )}
         </div>
       </div>
     </div>

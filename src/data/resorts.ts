@@ -15,6 +15,10 @@ export const resorts: Resort[] = [
     isNew: false,
     notes:
       "Includes Grandvalira, Ordino Arcalís and Pal Arinsal. Largest ski area in the Pyrenees.",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Europe/Andorra/Grandvalira.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/c/c1/AndorraSoldeuView.JPG",
   },
   {
@@ -30,6 +34,10 @@ export const resorts: Resort[] = [
     longitude: 12.39,
     isNew: false,
     notes: "Includes Kirchberg and Mittersill areas",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Europe/Austria/Kitzbuhel.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/06/Kitzbuehel03.JPG",
   },
   {
@@ -45,6 +53,10 @@ export const resorts: Resort[] = [
     longitude: 10.29,
     isNew: true,
     notes: "New 25/26. Straddles Austrian/Swiss border with Samnaun",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Europe/Austria/Ischgl.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/5/52/Ischgl_01.jpg",
   },
   {
@@ -61,6 +73,10 @@ export const resorts: Resort[] = [
     isNew: false,
     notes:
       "Includes Grands Montets, Brévent-Flégère, Les Houches, Balme/Le Tour. Shared day bank.",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Europe/France/Chamonix.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/1/1f/Chamonix_valley_from_la_Fl%C3%A9g%C3%A8re%2C2010_07.JPG",
   },
   {
@@ -76,6 +92,10 @@ export const resorts: Resort[] = [
     longitude: 6.61,
     isNew: true,
     notes: "New 25/26 addition. No blackout dates.",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Europe/France/Megeve.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Village_%40_Rochebrune_%40_Meg%C3%A8ve_%2851037436052%29.jpg",
   },
   {
@@ -91,6 +111,10 @@ export const resorts: Resort[] = [
     longitude: 12.13,
     isNew: false,
     notes: "Shared day bank across all Dolomiti Superski areas",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Europe/Italy/Cortina.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/3/36/Faloria_Cortina_d%27Ampezzo_10.jpg",
   },
   {
@@ -106,6 +130,10 @@ export const resorts: Resort[] = [
     longitude: 11.94,
     isNew: false,
     notes: "Shared day bank across all Dolomiti Superski areas",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Europe/Italy/Kronplatz.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/8/8b/Kronplatz_Suedseite.jpg",
   },
   {
@@ -121,6 +149,10 @@ export const resorts: Resort[] = [
     longitude: 11.85,
     isNew: false,
     notes: "Shared day bank across all Dolomiti Superski areas",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Europe/Italy/Alta-Badia.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Alta_Badia.JPG",
   },
   {
@@ -136,6 +168,10 @@ export const resorts: Resort[] = [
     longitude: 11.71,
     isNew: false,
     notes: "Shared day bank across all Dolomiti Superski areas",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Europe/Italy/Val-Gardena.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/3/39/Val_Gardena.jpg",
   },
   {
@@ -151,6 +187,10 @@ export const resorts: Resort[] = [
     longitude: 11.61,
     isNew: false,
     notes: "Shared day bank across all Dolomiti Superski areas",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Europe/Italy/Val-di-Fassa.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/08/Saslonch_y_Sela_da_Mont_de_Seuc_d%27inviern.jpg",
   },
   {
@@ -166,6 +206,10 @@ export const resorts: Resort[] = [
     longitude: 11.88,
     isNew: false,
     notes: "Shared day bank across all Dolomiti Superski areas",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Europe/Italy/Arabba.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/08/Saslonch_y_Sela_da_Mont_de_Seuc_d%27inviern.jpg",
   },
   {
@@ -181,6 +225,10 @@ export const resorts: Resort[] = [
     longitude: 12.25,
     isNew: false,
     notes: "Tre Cime area. Shared day bank across all Dolomiti Superski areas",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: null,
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/4/4f/2019_Tre_Cime.jpg",
   },
   {
@@ -196,6 +244,10 @@ export const resorts: Resort[] = [
     longitude: 11.37,
     isNew: false,
     notes: "Shared day bank across all Dolomiti Superski areas",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: null,
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/a/aa/Cavalese.jpg",
   },
   {
@@ -211,6 +263,10 @@ export const resorts: Resort[] = [
     longitude: 11.8,
     isNew: false,
     notes: "Shared day bank across all Dolomiti Superski areas",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Europe/Italy/San-Martino.aspx",
     imageUrl: "https://www.dolomitisuperski.com/.imaging/mte/dolomitisuperski/654x484/dam/dss/comprensori/san-martino-di-castrozza-passo-rolle/winter/san-martino-di-castrozza-ph-dolomites-web-archivio-visitsanmartino.jpg/jcr:content/san-martino-di-castrozza-ph-dolomites%20web-archivio%20visitsanmartino.jpg",
   },
   {
@@ -226,6 +282,10 @@ export const resorts: Resort[] = [
     longitude: 11.58,
     isNew: false,
     notes: "Shared day bank across all Dolomiti Superski areas",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: null,
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/3/31/Brixen_Dom_Mari%C3%A4_Himmelfahrt_%28BD_14187_3_05-2015%29.jpg",
   },
   {
@@ -241,6 +301,10 @@ export const resorts: Resort[] = [
     longitude: 11.66,
     isNew: false,
     notes: "Shared day bank across all Dolomiti Superski areas",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: null,
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/08/Saslonch_y_Sela_da_Mont_de_Seuc_d%27inviern.jpg",
   },
   {
@@ -256,6 +320,10 @@ export const resorts: Resort[] = [
     longitude: 12.07,
     isNew: false,
     notes: "Shared day bank across all Dolomiti Superski areas",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: null,
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/9/91/Monte_Civetta_Caprile.jpg",
   },
   {
@@ -272,6 +340,10 @@ export const resorts: Resort[] = [
     isNew: true,
     notes:
       "New 25/26. Also known as Cervinia/Valtournenche. Shared 7-day bank across all Valle d'Aosta resorts.",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Europe/Italy/Cervinia.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/9/92/CervinoAug252023_03.jpg",
   },
   {
@@ -288,6 +360,10 @@ export const resorts: Resort[] = [
     isNew: true,
     notes:
       "New 25/26. Shared 7-day bank across all Valle d'Aosta resorts.",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Europe/Italy/Courmayeur.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/1/10/CourmayeurAug052024_01.jpg",
   },
   {
@@ -304,6 +380,10 @@ export const resorts: Resort[] = [
     isNew: true,
     notes:
       "New 25/26. Shared 7-day bank across all Valle d'Aosta resorts.",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Europe/Italy/La-Thuile.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/2/22/Panorama_La_Thuile_da_Chaz_Dura.jpg",
   },
   {
@@ -320,6 +400,10 @@ export const resorts: Resort[] = [
     isNew: true,
     notes:
       "New 25/26. 6 interconnected ski areas. Shared 7-day bank across all Valle d'Aosta resorts.",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Europe/Italy/Monterosa.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/06/Funifor_Pianalunga.JPG",
   },
   {
@@ -336,6 +420,10 @@ export const resorts: Resort[] = [
     isNew: true,
     notes:
       "New 25/26. Shared 7-day bank across all Valle d'Aosta resorts.",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Europe/Italy/Pila.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/e/e0/LagoChamoleAug022023_02.jpg",
   },
   {
@@ -351,6 +439,10 @@ export const resorts: Resort[] = [
     longitude: 7.74,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Europe/Switzerland/Zermatt.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/a/a0/1_zermatt_evening_2022.jpg",
   },
   {
@@ -366,6 +458,10 @@ export const resorts: Resort[] = [
     longitude: 9.83,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Europe/Switzerland/St-Moritz.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/06/Exterior_Winter_2016_17_Fotograf_Romano_Salis_%2821%29.jpg",
   },
   {
@@ -381,6 +477,10 @@ export const resorts: Resort[] = [
     longitude: -120.24,
     isNew: false,
     notes: "Combined Squaw Valley and Alpine Meadows",
+    reservationRequired: true,
+    blackoutDates: "Dec 26 – 31, Feb 14 – 22",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/California/Palisades-Tahoe.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/3/3c/TheVillageatSquawValley-exterior.jpg",
   },
   {
@@ -396,6 +496,10 @@ export const resorts: Resort[] = [
     longitude: -120.08,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/California/Sierra-at-Tahoe.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/e/e9/Sierra-at-Tahoe_2.jpg",
   },
   {
@@ -411,6 +515,10 @@ export const resorts: Resort[] = [
     longitude: -118.95,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "Dec 26 – 31, Feb 14 – 22",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/California/Mammoth-Mountain.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/1/17/Ritter_Range_and_Mammoth_Mountain.jpg",
   },
   {
@@ -426,6 +534,10 @@ export const resorts: Resort[] = [
     longitude: -119.09,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "Dec 26 – 31, Feb 14 – 22",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/California/June-Mountain.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/2/2d/June_Mountain_skiing.jpg",
   },
   {
@@ -441,6 +553,10 @@ export const resorts: Resort[] = [
     longitude: -116.85,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "Dec 26 – 31, Feb 14 – 22",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/California/Bear-Mountain.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Bear_Mountain%2C_Big_Bear_Lake.jpg",
   },
   {
@@ -456,6 +572,10 @@ export const resorts: Resort[] = [
     longitude: -116.89,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "Dec 26 – 31, Feb 14 – 22",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/California/Snow-Summit.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/a/a0/Snow_Summit_Ski_Resort.jpg",
   },
   {
@@ -471,6 +591,10 @@ export const resorts: Resort[] = [
     longitude: -117.03,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "Dec 26 – 31, Feb 14 – 22",
+    fullPassOnly: false,
+    powderhoundsUrl: null,
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/1/17/Snow_Valley_CA_2010_1.jpg",
   },
   {
@@ -486,6 +610,10 @@ export const resorts: Resort[] = [
     longitude: -114.35,
     isNew: false,
     notes: "Not on Base Pass",
+    reservationRequired: true,
+    blackoutDates: "",
+    fullPassOnly: true,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Idaho/Sun-Valley.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/d/da/Baldmountainid.jpg",
   },
   {
@@ -502,6 +630,10 @@ export const resorts: Resort[] = [
     isNew: false,
     notes:
       "Not on Base Pass. Beginner/family mountain adjacent to Sun Valley",
+    reservationRequired: true,
+    blackoutDates: "",
+    fullPassOnly: true,
+    powderhoundsUrl: null,
     imageUrl: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/c4/b7/97/caption.jpg?w=900&h=500&s=1",
   },
   {
@@ -517,6 +649,10 @@ export const resorts: Resort[] = [
     longitude: -149.09,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Alaska/Alyeska.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/b/b8/Girdwood_Valley.jpg",
   },
   {
@@ -532,6 +668,10 @@ export const resorts: Resort[] = [
     longitude: -121.47,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "Dec 26 – 31, Feb 14 – 22",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Washington/Crystal-Mountain.aspx",
     imageUrl: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/29/13/d7/exterior.jpg?w=900&h=500&s=1",
   },
   {
@@ -548,6 +688,10 @@ export const resorts: Resort[] = [
     isNew: false,
     notes:
       "Part of The Summit at Snoqualmie complex but listed separately on Ikon",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Washington/Alpental.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/2/2e/View_from_top_of_Alpental.jpg",
   },
   {
@@ -563,6 +707,10 @@ export const resorts: Resort[] = [
     longitude: -121.41,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Washington/Summit-at-Snoqualmie.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/02/Snoqualmie_summit_lodge.jpg",
   },
   {
@@ -578,6 +726,10 @@ export const resorts: Resort[] = [
     longitude: -121.69,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Oregon/Mt-Bachelor.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/0c/Mount_Bachelor_closeup.jpg",
   },
   {
@@ -593,6 +745,10 @@ export const resorts: Resort[] = [
     longitude: -116.62,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Idaho/Schweitzer.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/f/f5/Sandpoint_Idaho_from_Schweitzer.jpg",
   },
   {
@@ -609,6 +765,10 @@ export const resorts: Resort[] = [
     isNew: false,
     notes:
       "Not on Base Pass. Shared 7-day bank across all 4 Aspen Snowmass mountains",
+    reservationRequired: true,
+    blackoutDates: "",
+    fullPassOnly: true,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Colorado/Aspen.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/09/DSCN2976_aspenmountain_e_600.jpg",
   },
   {
@@ -625,6 +785,10 @@ export const resorts: Resort[] = [
     isNew: false,
     notes:
       "Not on Base Pass. Shared 7-day bank across all 4 Aspen Snowmass mountains",
+    reservationRequired: true,
+    blackoutDates: "",
+    fullPassOnly: true,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Colorado/Aspen-Highlands.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Lift_1A_on_Aspen_Mountain.jpg",
   },
   {
@@ -641,6 +805,10 @@ export const resorts: Resort[] = [
     isNew: false,
     notes:
       "Not on Base Pass. Shared 7-day bank across all 4 Aspen Snowmass mountains",
+    reservationRequired: true,
+    blackoutDates: "",
+    fullPassOnly: true,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Colorado/Buttermilk.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/4/42/Buttermilk_in_Winter.jpg",
   },
   {
@@ -657,6 +825,10 @@ export const resorts: Resort[] = [
     isNew: false,
     notes:
       "Not on Base Pass. Shared 7-day bank across all 4 Aspen Snowmass mountains",
+    reservationRequired: true,
+    blackoutDates: "",
+    fullPassOnly: true,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Colorado/Snowmass.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Lift_1A_on_Aspen_Mountain.jpg",
   },
   {
@@ -672,6 +844,10 @@ export const resorts: Resort[] = [
     longitude: -106.8,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "Dec 26 – 31, Feb 14 – 22",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Colorado/Steamboat.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Steamboat_springs_ski_resort.jpg",
   },
   {
@@ -687,6 +863,10 @@ export const resorts: Resort[] = [
     longitude: -105.76,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "Dec 26 – 31, Feb 14 – 22",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Colorado/Winter-Park.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/f/f6/Winter_Park_Base_Area.JPG",
   },
   {
@@ -702,6 +882,10 @@ export const resorts: Resort[] = [
     longitude: -106.15,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "Dec 26 – 31, Feb 14 – 22",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Colorado/Copper-Mountain.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/9/92/Spaulding_Ridge_wildflowers%2C_Copper_Mtn.jpg",
   },
   {
@@ -717,6 +901,10 @@ export const resorts: Resort[] = [
     longitude: -105.87,
     isNew: false,
     notes: "Acquired by Alterra 2024",
+    reservationRequired: false,
+    blackoutDates: "Dec 26 – 31, Feb 14 – 22",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Colorado/Arapahoe-Basin.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/9/91/Eastwall.jpg",
   },
   {
@@ -732,6 +920,10 @@ export const resorts: Resort[] = [
     longitude: -105.58,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "Dec 26 – 31, Feb 14 – 22",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Colorado/Eldora.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/2/29/Eldora_Mountain_Ski_Resort_at_Top_of_International.jpg",
   },
   {
@@ -747,6 +939,10 @@ export const resorts: Resort[] = [
     longitude: -110.86,
     isNew: false,
     notes: "Not on Base Pass",
+    reservationRequired: true,
+    blackoutDates: "",
+    fullPassOnly: true,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Wyoming/JacksonHole.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/d/de/Jackson_hole_new_tram.jpg",
   },
   {
@@ -762,6 +958,10 @@ export const resorts: Resort[] = [
     longitude: -111.4,
     isNew: false,
     notes: "",
+    reservationRequired: true,
+    blackoutDates: "Dec 26 – 31, Feb 14 – 22",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Montana/BigSky.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/1/16/Lone_Mountain_Sunset_%2832727260230%29.jpg",
   },
   {
@@ -777,6 +977,10 @@ export const resorts: Resort[] = [
     longitude: -105.44,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/NewMexico/Taos.aspx",
     imageUrl: "https://cdn.skimag.com/wp-content/uploads/2025/03/01.21.23_Base-Area_-4-scaled.jpg?width=3840&auto=webp&quality=75&fit=cover",
   },
   {
@@ -792,6 +996,10 @@ export const resorts: Resort[] = [
     longitude: -111.48,
     isNew: false,
     notes: "",
+    reservationRequired: true,
+    blackoutDates: "Dec 26 – 31, Feb 14 – 22",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Utah/Deer-Valley.aspx",
     imageUrl: "https://www.skiutah.com/files/subblob/service/images.listing.size.large/1072140570",
   },
   {
@@ -807,6 +1015,10 @@ export const resorts: Resort[] = [
     longitude: -111.59,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "Dec 26 – 31, Feb 14 – 22",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Utah/Solitude.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/en/f/f7/Solitude-02-2006.jpg",
   },
   {
@@ -822,6 +1034,10 @@ export const resorts: Resort[] = [
     longitude: -111.58,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "Dec 26 – 31, Feb 14 – 22",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Utah/Brighton.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Big_Cottonwood_Canyon%2C_Utah.JPG",
   },
   {
@@ -837,6 +1053,10 @@ export const resorts: Resort[] = [
     longitude: -111.64,
     isNew: false,
     notes: "Not on Base Pass. Shared day bank with Snowbird",
+    reservationRequired: true,
+    blackoutDates: "",
+    fullPassOnly: true,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Utah/Alta.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/5/53/Alta_ski_lessons_-_Feb_21%2C_2011.jpg",
   },
   {
@@ -852,6 +1072,10 @@ export const resorts: Resort[] = [
     longitude: -111.65,
     isNew: false,
     notes: "Not on Base Pass. Shared day bank with Alta",
+    reservationRequired: true,
+    blackoutDates: "",
+    fullPassOnly: true,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Utah/Snowbird.aspx",
     imageUrl: "https://www.snowbird.com/_bluedrop/images/sites/default/files/2025-10/1.27.25.Otto-35_snowbird_hompeage_aerial-tram_1000x667.jpg?u=aHR0cHM6Ly9jbXMuc25vd2JpcmQuY29tL3NpdGVzL2RlZmF1bHQvZmlsZXMvMjAyNS0xMC8xLjI3LjI1Lk90dG8tMzVfc25vd2JpcmRfaG9tcGVhZ2VfYWVyaWFsLXRyYW1fMTAwMHg2NjcuanBn&d=6d225a1ee810369e9a192dded4414b15&q=75&w=1000&h=667",
   },
   {
@@ -867,6 +1091,10 @@ export const resorts: Resort[] = [
     longitude: -111.86,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Utah/Snowbasin.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/d/d6/Basin_1x_blue_sky.jpg",
   },
   {
@@ -882,6 +1110,10 @@ export const resorts: Resort[] = [
     longitude: -84.91,
     isNew: false,
     notes: "Harbor Springs, Michigan",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: null,
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/2/23/HighlandsAtHarborSptings.jpg",
   },
   {
@@ -897,6 +1129,10 @@ export const resorts: Resort[] = [
     longitude: -84.92,
     isNew: false,
     notes: "Boyne Falls, Michigan",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: null,
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/0b/Boyne_Mountain.JPG",
   },
   {
@@ -912,6 +1148,10 @@ export const resorts: Resort[] = [
     longitude: -72.91,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "Dec 26 – 31, Feb 14 – 22",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Vermont/Stratton.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/2/23/Mount_Snow_ski_aerial.jpg",
   },
   {
@@ -927,6 +1167,10 @@ export const resorts: Resort[] = [
     longitude: -72.89,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "Dec 26 – 31, Feb 14 – 22",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Vermont/Sugarbush.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Mt_Ellen%2C_Sugarbush.jpg",
   },
   {
@@ -942,6 +1186,10 @@ export const resorts: Resort[] = [
     longitude: -72.82,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Vermont/Killington.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Killington_Resort_2018-03-18.jpg",
   },
   {
@@ -957,6 +1205,10 @@ export const resorts: Resort[] = [
     longitude: -72.83,
     isNew: false,
     notes: "Sister mountain to Killington",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Vermont/Pico.aspx",
     imageUrl: "https://media.vrbo.com/lodging/34000000/33700000/33691300/33691210/b1fb9c79.jpg?impolicy=resizecrop&rw=575&rh=575&ra=fill",
   },
   {
@@ -972,6 +1224,10 @@ export const resorts: Resort[] = [
     longitude: -79.99,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "Dec 26 – 31, Feb 14 – 22",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/WestVirginia/Snowshoe.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/4/44/The_Village_at_Snowshoe.jpg",
   },
   {
@@ -987,6 +1243,10 @@ export const resorts: Resort[] = [
     longitude: -70.85,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "Dec 26 – 31, Feb 14 – 22",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Maine/Sunday-River.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/c/cf/Newry_ME.JPG",
   },
   {
@@ -1002,6 +1262,10 @@ export const resorts: Resort[] = [
     longitude: -70.31,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "Dec 26 – 31, Feb 14 – 22",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/Maine/Sugarloaf.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/a/ab/Sugarloaf_Mt_seen_from_AT_above_Crocker_Cirque.jpg",
   },
   {
@@ -1017,6 +1281,10 @@ export const resorts: Resort[] = [
     longitude: -71.62,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/USA/NewHampshire/Loon.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/e/e9/Loon_Mountain_NH_from_Flume.jpg",
   },
   {
@@ -1032,6 +1300,10 @@ export const resorts: Resort[] = [
     longitude: -75.35,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: null,
     imageUrl: "https://momonthemap.com/wp-content/uploads/2017/02/SKi-In_Ski-Out_Lodge.jpeg",
   },
   {
@@ -1047,6 +1319,10 @@ export const resorts: Resort[] = [
     longitude: -75.49,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: null,
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/d/dd/Blue_Slopes.JPG",
   },
   {
@@ -1063,6 +1339,10 @@ export const resorts: Resort[] = [
     isNew: false,
     notes:
       "Shared 7-day bank across all SkiBig3 resorts. Blackout dates on Base Pass.",
+    reservationRequired: false,
+    blackoutDates: "Dec 26 – 31",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Canada/Banff/Sunshine.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/6/62/Sunshine_Village_06.jpg",
   },
   {
@@ -1079,6 +1359,10 @@ export const resorts: Resort[] = [
     isNew: false,
     notes:
       "Shared 7-day bank across all SkiBig3 resorts. Blackout dates on Base Pass.",
+    reservationRequired: false,
+    blackoutDates: "Dec 26 – 31",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Canada/Banff/Lake-Louise.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/b/b3/Lake_Louise_in_Banff_National_Park%2C_boat_view_2.jpg",
   },
   {
@@ -1095,6 +1379,10 @@ export const resorts: Resort[] = [
     isNew: false,
     notes:
       "Shared 7-day bank across all SkiBig3 resorts. Blackout dates on Base Pass.",
+    reservationRequired: false,
+    blackoutDates: "Dec 26 – 31",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Canada/Banff/Norquay.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/3/38/Norquay2.JPG",
   },
   {
@@ -1110,6 +1398,10 @@ export const resorts: Resort[] = [
     longitude: -118.17,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Canada/BritishColumbia/Revelstoke.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/1/16/A_day%27s_skiing_at_spedtacular_Mt_Revelstoke_-_Noth_Americas_biggest_vertical_drop_at_1713m_%285620_ft%29_-_the_mid_mountain_day_lodge_-_%2828620313540%29.jpg",
   },
   {
@@ -1125,6 +1417,10 @@ export const resorts: Resort[] = [
     longitude: -123.2,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Canada/BritishColumbia/Cypress.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/2/21/Cypress-foggy.jpg",
   },
   {
@@ -1140,6 +1436,10 @@ export const resorts: Resort[] = [
     longitude: -117.76,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Canada/BritishColumbia/Red-Mountain.aspx",
     imageUrl: "https://static.ffx.io/images/$zoom_1%2C$multiply_0.3283%2C$ratio_1.777778%2C$width_1779%2C$x_21%2C$y_122/t_crop_custom/q_86%2Cf_auto/c1fab7c067e57f63a2a8419b2382b2032e681946",
   },
   {
@@ -1155,6 +1455,10 @@ export const resorts: Resort[] = [
     longitude: -116.24,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Canada/BritishColumbia/Panorama.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/f/f2/Invermere_bc.jpg",
   },
   {
@@ -1170,6 +1474,10 @@ export const resorts: Resort[] = [
     longitude: -119.89,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Canada/BritishColumbia/Sun-Peaks.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/4/4b/Feb_7_full_moon.jpg_%281%29.jpg",
   },
   {
@@ -1185,6 +1493,10 @@ export const resorts: Resort[] = [
     longitude: -74.58,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "Dec 26 – 31, Feb 14 – 22",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Canada/Quebec/Tremblant.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/08/Fall_Colors_of_Mont_Tremblant.jpg",
   },
   {
@@ -1200,6 +1512,10 @@ export const resorts: Resort[] = [
     longitude: -70.68,
     isNew: true,
     notes: "New 25/26 addition",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Canada/Quebec/Le-Massif.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/6/66/LeMassifOverhead.jpg",
   },
   {
@@ -1215,6 +1531,10 @@ export const resorts: Resort[] = [
     longitude: -80.32,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "Dec 26 – 31, Feb 14 – 22",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Canada/Ontario/Blue-Mountain.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/2/20/Blue_Mountain_Resort_-_Summer_view.jpg",
   },
   {
@@ -1230,6 +1550,10 @@ export const resorts: Resort[] = [
     longitude: -70.29,
     isNew: false,
     notes: "Andes, near Santiago",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/SouthAmerica/Chile/Valle-Nevado.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/8/82/Vista_de_Valle_Nevado.jpg",
   },
   {
@@ -1245,6 +1569,10 @@ export const resorts: Resort[] = [
     longitude: 148.3,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Other/Australia/Thredbo.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/e/ee/KozNatParkSnowyRiver.jpg",
   },
   {
@@ -1260,6 +1588,10 @@ export const resorts: Resort[] = [
     longitude: 146.44,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Other/Australia/Mt-Buller.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Mt_Buller_Bourke_St_Stevage-2008-28-11.jpg",
   },
   {
@@ -1275,6 +1607,10 @@ export const resorts: Resort[] = [
     longitude: 168.73,
     isNew: false,
     notes: "Shared day bank across all 3 NZ resorts",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/NewZealand/Coronet-Peak.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/c/c4/Coronet_Peak_in_evening-sep13.jpg",
   },
   {
@@ -1290,6 +1626,10 @@ export const resorts: Resort[] = [
     longitude: 168.81,
     isNew: false,
     notes: "Shared day bank across all 3 NZ resorts",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/NewZealand/Remarkables.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/8/86/The_Remarkables_%281126885451%29.jpg",
   },
   {
@@ -1305,6 +1645,10 @@ export const resorts: Resort[] = [
     longitude: 171.53,
     isNew: false,
     notes: "Shared day bank across all 3 NZ resorts",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/NewZealand/Mt-Hutt.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Mt_Hutt.jpg",
   },
   {
@@ -1321,6 +1665,10 @@ export const resorts: Resort[] = [
     isNew: false,
     notes:
       "Includes Grand Hirafu, Hanazono, Niseko Village and Annupuri. Shared day bank.",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Japan/Hokkaido/Niseko.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/5/59/Niseko_United_Ski_Resort_in_Hokkaido_Japan.jpg",
   },
   {
@@ -1336,6 +1684,10 @@ export const resorts: Resort[] = [
     longitude: 138.17,
     isNew: false,
     notes: "",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Japan/Honshu/Arai.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Myokousan_from_hiutiyama_1996_6_29.jpg",
   },
   {
@@ -1352,6 +1704,10 @@ export const resorts: Resort[] = [
     isNew: true,
     notes:
       "New 25/26. 18 interconnected areas. Days are combined total across all areas.",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Japan/Honshu/Shiga-Kogen.aspx",
     imageUrl: "https://www.japan-guide.com/g18/6026_01.jpg",
   },
   {
@@ -1368,6 +1724,10 @@ export const resorts: Resort[] = [
     isNew: true,
     notes:
       'New 25/26. By Hoshino Resorts, Gunma Prefecture. Highest avg snowfall of new additions (~588"/yr).',
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: null,
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/e/eb/Tanigawa-dake%2C_October_2007.jpg",
   },
   {
@@ -1383,6 +1743,10 @@ export const resorts: Resort[] = [
     longitude: 138.08,
     isNew: true,
     notes: "New 25/26. 8.5km groomed run. 2hrs from Tokyo.",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Japan/Honshu/Myoko-Suginohara.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Myokousan_from_hiutiyama_1996_6_29.jpg",
   },
   {
@@ -1398,6 +1762,10 @@ export const resorts: Resort[] = [
     longitude: 141.0,
     isNew: true,
     notes: "New 25/26. Iwate Prefecture, Honshu. 10m+ annual snowfall.",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: null,
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/6/60/Appi_Cable_Cars.jpg",
   },
   {
@@ -1413,6 +1781,10 @@ export const resorts: Resort[] = [
     longitude: 142.38,
     isNew: true,
     notes: "New 25/26. Hokkaido. Two zones: Furano and Kitanomine.",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Japan/Hokkaido/Furano.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/3/3c/Furano_ski.jpg",
   },
   {
@@ -1428,6 +1800,10 @@ export const resorts: Resort[] = [
     longitude: 140.14,
     isNew: true,
     notes: "New 25/26. Fukushima Prefecture. Views of Lake Inawashiro.",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: null,
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/4/48/Lake_Inawashiro_view_from_Mt.Bandai.jpg",
   },
   {
@@ -1444,6 +1820,10 @@ export const resorts: Resort[] = [
     isNew: true,
     notes:
       "New 25/26. Yamagata. Famous for snow monster juhyo trees.",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: "https://www.powderhounds.com/Japan/Honshu/Zao-Onsen.aspx",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Yamagata-zao_ski_1_%28200712%29.jpg",
   },
   {
@@ -1459,6 +1839,10 @@ export const resorts: Resort[] = [
     longitude: 115.44,
     isNew: true,
     notes: "New 25/26. 2022 Beijing Winter Olympics venue.",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: null,
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/0d/Golden_forests_at_Chongli_%E5%B4%87%E7%A4%BC%E9%87%91%E7%A7%8B_%288181860966%29.jpg",
   },
   {
@@ -1474,6 +1858,10 @@ export const resorts: Resort[] = [
     longitude: 128.68,
     isNew: true,
     notes: "New 25/26. 2018 Pyeongchang Winter Olympics venue.",
+    reservationRequired: false,
+    blackoutDates: "",
+    fullPassOnly: false,
+    powderhoundsUrl: null,
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/6/6f/Winter_2014_Candidate_City-_PyeongChang_Dragon_Valley_ski_resort.jpg",
   },
 ];

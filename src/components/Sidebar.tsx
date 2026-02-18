@@ -48,7 +48,8 @@ export function Sidebar({
     filters.macroRegions.length > 0 ||
     filters.colorGroups.length > 0 ||
     filters.passType !== "all" ||
-    filters.newOnly;
+    filters.newOnly ||
+    filters.noBlackouts;
 
   return (
     <aside className="flex h-full w-[380px] min-w-[380px] flex-col border-r border-border bg-surface">
@@ -175,20 +176,37 @@ export function Sidebar({
             </select>
           </div>
 
-          <div>
-            <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-muted">
-              New 25/26
-            </label>
-            <button
-              onClick={() => update({ newOnly: !filters.newOnly })}
-              className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
-                filters.newOnly
-                  ? "bg-ikon text-white"
-                  : "bg-background text-muted border border-border hover:text-foreground"
-              }`}
-            >
-              New Only
-            </button>
+          <div className="flex gap-2">
+            <div>
+              <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-muted">
+                New 25/26
+              </label>
+              <button
+                onClick={() => update({ newOnly: !filters.newOnly })}
+                className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+                  filters.newOnly
+                    ? "bg-ikon text-white"
+                    : "bg-background text-muted border border-border hover:text-foreground"
+                }`}
+              >
+                New Only
+              </button>
+            </div>
+            <div>
+              <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-muted">
+                Blackouts
+              </label>
+              <button
+                onClick={() => update({ noBlackouts: !filters.noBlackouts })}
+                className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+                  filters.noBlackouts
+                    ? "bg-ikon text-white"
+                    : "bg-background text-muted border border-border hover:text-foreground"
+                }`}
+              >
+                No Blackouts
+              </button>
+            </div>
           </div>
         </div>
 
@@ -201,6 +219,7 @@ export function Sidebar({
                 colorGroups: [],
                 passType: "all",
                 newOnly: false,
+                noBlackouts: false,
                 search: "",
               })
             }
