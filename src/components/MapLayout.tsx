@@ -51,12 +51,21 @@ function applyFilters(allResorts: Resort[], filters: Filters): Resort[] {
 export function MapLayout() {
   const [filters, setFilters] = useState<Filters>(defaultFilters);
   const [selectedResort, setSelectedResort] = useState<Resort | null>(null);
+  const [anchorPoint, setAnchorPoint] = useState<{ x: number; y: number } | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const filtered = useMemo(() => applyFilters(resorts, filters), [filters]);
 
+  // Sidebar click — no anchor point
   const handleResortClick = useCallback((resort: Resort) => {
     setSelectedResort(resort);
+    setAnchorPoint(null);
+  }, []);
+
+  // Map marker click — includes pixel position
+  const handleMapResortSelect = useCallback((resort: Resort, point: { x: number; y: number }) => {
+    setSelectedResort(resort);
+    setAnchorPoint(point);
   }, []);
 
   return (
@@ -95,14 +104,15 @@ export function MapLayout() {
           </button>
         )}
 
-        <FeltMap filters={filters} selectedResort={selectedResort} onResortSelect={handleResortClick} />
+        <FeltMap filters={filters} selectedResort={selectedResort} onResortSelect={handleMapResortSelect} />
 
         {/* Resort detail panel overlay */}
         {selectedResort && (
           <ResortDetailPanel
             resort={selectedResort}
-            onClose={() => setSelectedResort(null)}
-            onNavigate={(r) => setSelectedResort(r)}
+            anchorPoint={anchorPoint}
+            onClose={() => { setSelectedResort(null); setAnchorPoint(null); }}
+            onNavigate={(r) => { setSelectedResort(r); setAnchorPoint(null); }}
           />
         )}
       </div>

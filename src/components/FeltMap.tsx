@@ -49,6 +49,7 @@ interface FeltClickFeature {
 
 interface FeltClickEvent {
   coordinate: { latitude: number; longitude: number };
+  point: { x: number; y: number };
   features: FeltClickFeature[];
 }
 
@@ -85,7 +86,7 @@ interface FeltController {
 interface FeltMapProps {
   filters: Filters;
   selectedResort: Resort | null;
-  onResortSelect?: (resort: Resort) => void;
+  onResortSelect?: (resort: Resort, point: { x: number; y: number }) => void;
 }
 
 /* ── Build Felt-compatible filter from sidebar state ──────── */
@@ -244,8 +245,8 @@ export function FeltMap({ filters, selectedResort, onResortSelect }: FeltMapProp
 
             const resort = resortByName.get(name);
             if (resort) {
-              console.log("[FeltMap] Marker clicked:", name);
-              onResortSelectRef.current?.(resort);
+              console.log("[FeltMap] Marker clicked:", name, "at", event.point);
+              onResortSelectRef.current?.(resort, event.point);
             }
           },
         });
