@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Resort, Filters } from "@/types";
 import { resorts as allResorts } from "@/data/resorts";
+import type { Viewport } from "@/lib/geoProject";
 
 const FELT_MAP_ID = process.env.NEXT_PUBLIC_FELT_MAP_ID;
 
@@ -53,11 +54,17 @@ interface FeltClickEvent {
   features: FeltClickFeature[];
 }
 
+interface FeltViewportState {
+  center: { latitude: number; longitude: number };
+  zoom: number;
+}
+
 interface FeltController {
   setViewport(opts: {
     center: { latitude: number; longitude: number };
     zoom: number;
   }): Promise<void>;
+  getViewport(): Promise<FeltViewportState>;
   getLayers(): Promise<Array<FeltLayer | null>>;
   setLayerFilters(params: {
     layerId: string;
@@ -80,13 +87,21 @@ interface FeltController {
   onPointerClick(params: {
     handler: (event: FeltClickEvent) => void;
   }): () => void;
+  onViewportMove(params: {
+    handler: (viewport: FeltViewportState) => void;
+  }): () => void;
+  onViewportMoveEnd(params: {
+    handler: (viewport: FeltViewportState) => void;
+  }): () => void;
 }
 
 /* ── Props ────────────────────────────────────────────────── */
 interface FeltMapProps {
   filters: Filters;
   selectedResort: Resort | null;
-  onResortSelect?: (resort: Resort, point: { x: number; y: number }) => void;
+  onResortSelect?: (resort: Resort) => void;
+  onViewportChange?: (viewport: Viewport) => void;
+  mapContainerRef?: React.RefObject<HTMLDivElement | null>;
 }
 
 /* ── Build Felt-compatible filter from sidebar state ──────── */
@@ -135,14 +150,24 @@ for (const r of allResorts) {
 }
 
 /* ── Component ────────────────────────────────────────────── */
-export function FeltMap({ filters, selectedResort, onResortSelect }: FeltMapProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
+export function FeltMap({
+  filters,
+  selectedResort,
+  onResortSelect,
+  onViewportChange,
+  mapContainerRef,
+}: FeltMapProps) {
+  const internalContainerRef = useRef<HTMLDivElement>(null);
+  const containerRef = mapContainerRef ?? internalContainerRef;
   const feltRef = useRef<FeltController | null>(null);
   const layerIdRef = useRef<string | null>(null);
   const featureLookupRef = useRef<Map<string, string | number>>(new Map());
   const onResortSelectRef = useRef(onResortSelect);
   onResortSelectRef.current = onResortSelect;
+  const onViewportChangeRef = useRef(onViewportChange);
+  onViewportChangeRef.current = onViewportChange;
   const unsubClickRef = useRef<(() => void) | null>(null);
+  const unsubViewportRef = useRef<(() => void) | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [layerReady, setLayerReady] = useState(false);
@@ -171,8 +196,24 @@ export function FeltMap({ filters, selectedResort, onResortSelect }: FeltMapProp
         feltRef.current = controller;
         setIsLoading(false);
 
-        // Discover the data layer by listing all layers from the embedded controller
-        // (REST API IDs don't work inside the iframe — we must discover the internal ID)
+        // Seed initial viewport
+        try {
+          const vp = await controller.getViewport();
+          if (!cancelled) {
+            onViewportChangeRef.current?.({ center: vp.center, zoom: vp.zoom });
+          }
+        } catch (_) {}
+
+        // Subscribe to viewport changes — keeps overlay anchored to lat/lng
+        try {
+          unsubViewportRef.current = controller.onViewportMove({
+            handler: (vp) => {
+              onViewportChangeRef.current?.({ center: vp.center, zoom: vp.zoom });
+            },
+          });
+        } catch (_) {}
+
+        // Discover the data layer
         let dataLayerId: string | null = null;
 
         for (let attempt = 0; attempt < 10; attempt++) {
@@ -186,7 +227,6 @@ export function FeltMap({ filters, selectedResort, onResortSelect }: FeltMapProp
               .map((l) => `${l!.name} (${l!.id})`),
           );
 
-          // Find the "Ikon Resorts" point layer (skip raster/tile layers)
           const found = layers.find(
             (l) => l && l.name === "Ikon Resorts",
           );
@@ -195,7 +235,6 @@ export function FeltMap({ filters, selectedResort, onResortSelect }: FeltMapProp
             break;
           }
 
-          // Wait before retrying
           await new Promise((r) => setTimeout(r, 2000));
           if (cancelled) return;
         }
@@ -245,8 +284,8 @@ export function FeltMap({ filters, selectedResort, onResortSelect }: FeltMapProp
 
             const resort = resortByName.get(name);
             if (resort) {
-              console.log("[FeltMap] Marker clicked:", name, "at", event.point);
-              onResortSelectRef.current?.(resort, event.point);
+              console.log("[FeltMap] Marker clicked:", name);
+              onResortSelectRef.current?.(resort);
             }
           },
         });
@@ -264,6 +303,7 @@ export function FeltMap({ filters, selectedResort, onResortSelect }: FeltMapProp
     return () => {
       cancelled = true;
       unsubClickRef.current?.();
+      unsubViewportRef.current?.();
     };
   }, []);
 
@@ -281,19 +321,13 @@ export function FeltMap({ filters, selectedResort, onResortSelect }: FeltMapProp
       .catch((err) => console.warn("[FeltMap] setLayerFilters error:", err));
   }, [filters, layerReady]);
 
-  // Select feature + open popup on resort click
+  // Select feature on resort click (highlight marker, pan map)
   useEffect(() => {
     const layerId = layerIdRef.current;
     if (!feltRef.current || !selectedResort) return;
 
     if (layerId && layerReady) {
       const featureId = featureLookupRef.current.get(selectedResort.name);
-      console.log(
-        "[FeltMap] Select:",
-        selectedResort.name,
-        "→ featureId:",
-        featureId,
-      );
 
       if (featureId != null) {
         feltRef.current
@@ -303,7 +337,6 @@ export function FeltMap({ filters, selectedResort, onResortSelect }: FeltMapProp
             showPopup: false,
             fitViewport: { maxZoom: 10 },
           })
-          .then(() => console.log("[FeltMap] Feature selected"))
           .catch((err) => console.warn("[FeltMap] selectFeature error:", err));
         return;
       }

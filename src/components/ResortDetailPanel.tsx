@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef, useLayoutEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Resort, COLOR_MAP } from "@/types";
 import { resorts as allResorts } from "@/data/resorts";
 import { wikiThumb } from "@/lib/wikiThumb";
+import { lngLatToPixel, type Viewport } from "@/lib/geoProject";
 import {
   Mountain,
   MapPin,
@@ -72,8 +73,8 @@ function PassDayCard({ label, value }: { label: string; value: string }) {
 
 const PANEL_W = 400;
 const EDGE_PAD = 8;
-const MARKER_GAP = 16; // gap between marker and panel top
-const TRIANGLE_DEFAULT = 30; // default triangle offset from panel left
+const MARKER_GAP = 16;
+const TRIANGLE_DEFAULT = 30;
 
 interface PanelPosition {
   top: number;
@@ -82,11 +83,10 @@ interface PanelPosition {
 }
 
 function computePosition(
-  anchor: { x: number; y: number },
+  markerPixel: { x: number; y: number },
   containerW: number,
 ): PanelPosition {
-  // Position panel so triangle (at 30px default) aligns with marker x
-  let left = anchor.x - TRIANGLE_DEFAULT;
+  let left = markerPixel.x - TRIANGLE_DEFAULT;
   let triangleLeft = TRIANGLE_DEFAULT;
 
   // Clamp right edge
@@ -102,10 +102,10 @@ function computePosition(
     left = EDGE_PAD;
   }
 
-  // Clamp triangle within panel bounds (keep 16px from edges)
+  // Clamp triangle within panel bounds
   triangleLeft = Math.max(16, Math.min(triangleLeft, PANEL_W - 16));
 
-  const top = anchor.y + MARKER_GAP;
+  const top = markerPixel.y + MARKER_GAP;
 
   return { top, left, triangleLeft };
 }
@@ -114,14 +114,16 @@ function computePosition(
 
 interface ResortDetailPanelProps {
   resort: Resort;
-  anchorPoint?: { x: number; y: number } | null;
+  viewport: Viewport | null;
+  mapContainerRef: React.RefObject<HTMLDivElement | null>;
   onClose: () => void;
   onNavigate: (resort: Resort) => void;
 }
 
 export function ResortDetailPanel({
   resort,
-  anchorPoint,
+  viewport,
+  mapContainerRef,
   onClose,
   onNavigate,
 }: ResortDetailPanelProps) {
@@ -129,30 +131,11 @@ export function ResortDetailPanel({
   const sharedBank = getSharedBankResorts(resort);
   const [imgError, setImgError] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState<PanelPosition | null>(null);
 
   // Reset image error state when resort changes
   useEffect(() => {
     setImgError(false);
   }, [resort.id]);
-
-  // Compute position from anchor point
-  useLayoutEffect(() => {
-    if (!anchorPoint || !wrapperRef.current) {
-      setPosition(null);
-      return;
-    }
-
-    const container = wrapperRef.current.offsetParent as HTMLElement | null;
-    if (!container) {
-      setPosition(null);
-      return;
-    }
-
-    const containerW = container.clientWidth;
-    setPosition(computePosition(anchorPoint, containerW));
-  }, [anchorPoint, resort.id]);
 
   // Entrance animation
   useEffect(() => {
@@ -182,31 +165,47 @@ export function ResortDetailPanel({
     setTimeout(onClose, 200);
   };
 
-  // Dynamic positioning when anchored to a map marker
+  // Reproject resort lat/lng → screen pixels on every viewport change
+  let position: PanelPosition | null = null;
+  if (viewport && mapContainerRef.current) {
+    const rect = mapContainerRef.current.getBoundingClientRect();
+    if (rect.width > 0 && rect.height > 0) {
+      const pixel = lngLatToPixel(
+        resort.longitude,
+        resort.latitude,
+        viewport,
+        rect.width,
+        rect.height,
+      );
+      position = computePosition(pixel, rect.width);
+    }
+  }
+
   const hasAnchor = position != null;
 
   return (
     <div
-      ref={wrapperRef}
       role="dialog"
       aria-labelledby="resort-detail-name"
       className={`
         absolute z-20
         ${hasAnchor ? "w-[400px]" : "w-full md:w-[400px] bottom-0 md:bottom-4 left-0 md:left-4"}
-        transition-all duration-200 ease-out
-        ${isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}
+        transition-opacity duration-200 ease-out
+        ${isVisible ? "opacity-100" : "opacity-0"}
       `}
       style={
-        hasAnchor
+        position
           ? { top: position.top, left: position.left }
           : undefined
       }
     >
       {/* Upward-pointing triangle connector to map marker */}
-      <div
-        className="hidden md:block absolute -top-2 w-4 h-4 rotate-45 border-l border-t border-border bg-surface z-10"
-        style={{ left: hasAnchor ? position.triangleLeft : TRIANGLE_DEFAULT }}
-      />
+      {position && (
+        <div
+          className="hidden md:block absolute -top-2 w-4 h-4 rotate-45 border-l border-t border-border bg-surface z-10"
+          style={{ left: position.triangleLeft }}
+        />
+      )}
 
       {/* Card body */}
       <div className="rounded-t-xl md:rounded-xl border border-border bg-surface shadow-2xl shadow-black/40 max-h-[70vh] overflow-y-auto relative">

@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef } from "react";
 import { resorts } from "@/data/resorts";
 import { Filters, Resort } from "@/types";
 import { Sidebar } from "./Sidebar";
 import { FeltMap } from "./FeltMap";
 import { ResortDetailPanel } from "./ResortDetailPanel";
+import type { Viewport } from "@/lib/geoProject";
 
 const defaultFilters: Filters = {
   macroRegions: [],
@@ -51,21 +52,14 @@ function applyFilters(allResorts: Resort[], filters: Filters): Resort[] {
 export function MapLayout() {
   const [filters, setFilters] = useState<Filters>(defaultFilters);
   const [selectedResort, setSelectedResort] = useState<Resort | null>(null);
-  const [anchorPoint, setAnchorPoint] = useState<{ x: number; y: number } | null>(null);
+  const [viewport, setViewport] = useState<Viewport | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
 
   const filtered = useMemo(() => applyFilters(resorts, filters), [filters]);
 
-  // Sidebar click — no anchor point
   const handleResortClick = useCallback((resort: Resort) => {
     setSelectedResort(resort);
-    setAnchorPoint(null);
-  }, []);
-
-  // Map marker click — includes pixel position
-  const handleMapResortSelect = useCallback((resort: Resort, point: { x: number; y: number }) => {
-    setSelectedResort(resort);
-    setAnchorPoint(point);
   }, []);
 
   return (
@@ -104,15 +98,22 @@ export function MapLayout() {
           </button>
         )}
 
-        <FeltMap filters={filters} selectedResort={selectedResort} onResortSelect={handleMapResortSelect} />
+        <FeltMap
+          filters={filters}
+          selectedResort={selectedResort}
+          onResortSelect={handleResortClick}
+          onViewportChange={setViewport}
+          mapContainerRef={mapContainerRef}
+        />
 
         {/* Resort detail panel overlay */}
         {selectedResort && (
           <ResortDetailPanel
             resort={selectedResort}
-            anchorPoint={anchorPoint}
-            onClose={() => { setSelectedResort(null); setAnchorPoint(null); }}
-            onNavigate={(r) => { setSelectedResort(r); setAnchorPoint(null); }}
+            viewport={viewport}
+            mapContainerRef={mapContainerRef}
+            onClose={() => setSelectedResort(null)}
+            onNavigate={(r) => setSelectedResort(r)}
           />
         )}
       </div>
