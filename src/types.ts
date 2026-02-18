@@ -11,6 +11,7 @@ export interface Resort {
   longitude: number;
   isNew: boolean;
   notes: string;
+  imageUrl?: string;
 }
 
 export interface Filters {

@@ -2,6 +2,7 @@
 
 import { Resort, Filters, COLOR_MAP, MACRO_REGIONS } from "@/types";
 import { ResortCard } from "./ResortCard";
+import { Mountain } from "lucide-react";
 
 const colorGroups = Object.keys(COLOR_MAP);
 
@@ -57,8 +58,9 @@ export function Sidebar({
           <h1 className="text-lg font-bold tracking-tight text-foreground">
             Ikon Pass 25/26
           </h1>
-          <p className="text-xs text-muted">
-            {resorts.length} of {totalCount} resorts
+          <p className="flex items-center gap-1 text-xs text-muted">
+            <Mountain className="h-3 w-3" />
+            {resorts.length} / {totalCount} resorts
           </p>
         </div>
         <button
@@ -210,13 +212,13 @@ export function Sidebar({
       </div>
 
       {/* Resort List */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto py-1">
         {resorts.length === 0 ? (
           <div className="flex h-32 items-center justify-center text-sm text-muted">
             No resorts match your filters
           </div>
         ) : (
-          <div className="divide-y divide-border">
+          <div className="resort-list">
             {resorts.map((resort) => (
               <ResortCard
                 key={resort.id}

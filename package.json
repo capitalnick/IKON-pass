@@ -7,10 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "setup:map": "tsx scripts/setup-felt-map.ts"
+    "setup:map": "tsx scripts/setup-felt-map.ts",
+    "populate:images": "tsx scripts/populate-resort-images.ts"
   },
   "dependencies": {
     "@feltmaps/js-sdk": "^1.10.0",
+    "lucide-react": "^0.574.0",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3"

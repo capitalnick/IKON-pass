@@ -1,7 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import { Resort, COLOR_MAP } from "@/types";
 import { resorts as allResorts } from "@/data/resorts";
+import {
+  Mountain,
+  MapPin,
+  CalendarDays,
+  Snowflake,
+  Users,
+  ExternalLink,
+} from "lucide-react";
 
 /** Groups that share a day bank (more than 1 resort in the group, non-Individual) */
 const SHARED_BANK_GROUPS = new Set<string>();
@@ -18,7 +27,7 @@ for (const [group, count] of Object.entries(groupCounts)) {
 function getSharedBankResorts(resort: Resort): Resort[] {
   if (!SHARED_BANK_GROUPS.has(resort.group)) return [];
   return allResorts.filter(
-    (r) => r.group === resort.group && r.id !== resort.id
+    (r) => r.group === resort.group && r.id !== resort.id,
   );
 }
 
@@ -27,6 +36,28 @@ function getPowderhoundsUrl(resort: Resort): string {
   return `https://www.google.com/search?q=${q}&btnI`;
 }
 
+/* ── Pass day pill ────────────────────────────────────────── */
+function PassPill({ label, value }: { label: string; value: string }) {
+  const isNA = value === "N/A";
+  const isUnlimited = value.startsWith("Unlimited");
+
+  return (
+    <span
+      className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ${
+        isNA
+          ? "bg-surface text-muted/50"
+          : isUnlimited
+            ? "bg-ikon/10 text-ikon"
+            : "bg-surface text-foreground border border-border"
+      }`}
+    >
+      <CalendarDays className="h-2.5 w-2.5" />
+      {label}: {value}
+    </span>
+  );
+}
+
+/* ── Resort Card ──────────────────────────────────────────── */
 interface ResortCardProps {
   resort: Resort;
   isSelected: boolean;
@@ -42,78 +73,83 @@ export function ResortCard({
 }: ResortCardProps) {
   const color = COLOR_MAP[resort.colorGroup] ?? "#666";
   const sharedBank = getSharedBankResorts(resort);
+  const [imgError, setImgError] = useState(false);
 
   return (
     <button
       onClick={onClick}
-      className={`w-full text-left px-5 py-3 transition-colors hover:bg-surface-hover ${
-        isSelected ? "bg-surface-hover" : ""
+      className={`w-full text-left px-4 py-3 transition-colors border-l-[3px] hover:bg-surface-hover ${
+        isSelected
+          ? "border-l-ikon bg-surface-hover"
+          : "border-l-transparent"
       }`}
     >
       <div className="flex items-start gap-3">
-        {/* Color dot */}
-        <div className="mt-1 relative flex-shrink-0">
-          <span
-            className="block h-3 w-3 rounded-full"
-            style={{ backgroundColor: color }}
-          />
-          {resort.isNew && (
-            <span
-              className="absolute -top-0.5 -right-0.5 block h-1.5 w-1.5 rounded-full bg-ikon"
-              title="New for 25/26"
+        {/* Image thumbnail */}
+        <div className="h-14 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-surface-card">
+          {resort.imageUrl && !imgError ? (
+            <img
+              src={resort.imageUrl}
+              alt={resort.name}
+              className="h-full w-full object-cover"
+              loading="lazy"
+              onError={() => setImgError(true)}
             />
+          ) : (
+            <div
+              className="flex h-full w-full items-center justify-center"
+              style={{ backgroundColor: `${color}20` }}
+            >
+              <Mountain className="h-5 w-5" style={{ color }} />
+            </div>
           )}
         </div>
 
-        <div className="flex-1 min-w-0">
-          {/* Resort name */}
+        <div className="min-w-0 flex-1">
+          {/* Name + New badge */}
           <div className="flex items-center gap-2">
-            <span className="text-sm font-semibold text-foreground truncate">
+            <span className="truncate text-sm font-semibold text-foreground">
               {resort.name}
             </span>
             {resort.isNew && (
-              <span className="flex-shrink-0 rounded bg-ikon/20 px-1.5 py-0.5 text-[10px] font-bold uppercase text-ikon">
+              <span className="flex-shrink-0 inline-flex items-center gap-0.5 rounded-full bg-ikon/15 px-1.5 py-0.5 text-[10px] font-bold uppercase text-ikon">
+                <Snowflake className="h-2.5 w-2.5" />
                 New
               </span>
             )}
           </div>
 
-          {/* Ikon Group (only for non-Individual) */}
-          {resort.group !== "Individual" && (
-            <div className="mt-0.5 text-xs text-muted">{resort.group}</div>
-          )}
+          {/* Country + Group */}
+          <div className="mt-0.5 flex items-center gap-1 text-xs text-muted">
+            <MapPin className="h-3 w-3 flex-shrink-0" />
+            <span className="truncate">{resort.country}</span>
+            {resort.group !== "Individual" && (
+              <>
+                <span className="text-border">·</span>
+                <span className="truncate">{resort.group}</span>
+              </>
+            )}
+          </div>
 
-          {/* Pass days */}
-          <div className="mt-1 flex gap-3 text-[11px]">
-            <span className="text-muted">
-              Full:{" "}
-              <span className="text-foreground font-medium">
-                {resort.fullPassDays}
-              </span>
-            </span>
-            <span className="text-muted">
-              Base:{" "}
-              <span className="text-foreground font-medium">
-                {resort.basePassDays}
-              </span>
-            </span>
+          {/* Pass day pills */}
+          <div className="mt-1.5 flex gap-2">
+            <PassPill label="Full" value={resort.fullPassDays} />
+            <PassPill label="Base" value={resort.basePassDays} />
           </div>
 
           {/* Notes */}
           {resort.notes && (
-            <p className="mt-1 text-[11px] text-muted/70 line-clamp-2">
+            <p className="mt-1.5 text-[11px] leading-relaxed text-muted/70 line-clamp-2">
               {resort.notes}
             </p>
           )}
 
-          {/* Shared bank resorts */}
+          {/* Shared bank */}
           {sharedBank.length > 0 && (
-            <div className="mt-1.5">
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-muted">
-                Shared day bank
-              </span>
-              <div className="mt-0.5 flex flex-wrap gap-x-1.5 gap-y-0.5">
-                {sharedBank.map((r) => (
+            <div className="mt-1.5 flex items-start gap-1">
+              <Users className="mt-0.5 h-3 w-3 flex-shrink-0 text-muted" />
+              <div className="flex flex-wrap gap-x-1.5 gap-y-0.5">
+                {sharedBank.map((r, i) => (
                   <span
                     key={r.id}
                     role="link"
@@ -128,10 +164,10 @@ export function ResortCard({
                         onNavigate?.(r);
                       }
                     }}
-                    className="text-[11px] text-ikon hover:underline cursor-pointer"
+                    className="cursor-pointer text-[11px] text-ikon hover:underline"
                   >
                     {r.name}
-                    {sharedBank.indexOf(r) < sharedBank.length - 1 ? "," : ""}
+                    {i < sharedBank.length - 1 ? "," : ""}
                   </span>
                 ))}
               </div>
@@ -146,17 +182,8 @@ export function ResortCard({
             onClick={(e) => e.stopPropagation()}
             className="mt-1.5 inline-flex items-center gap-1 text-[11px] text-ikon hover:underline"
           >
+            <ExternalLink className="h-3 w-3" />
             Powderhounds
-            <svg
-              width="10"
-              height="10"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-            >
-              <path d="M7 17L17 7M17 7H7M17 7v10" />
-            </svg>
           </a>
         </div>
       </div>
