@@ -345,51 +345,40 @@ export function FeltMap({
     const controller = feltRef.current;
     if (!controller || !selectedResort) return;
 
-    const layerId = layerIdRef.current;
-
-    // Highlight the marker without auto-panning
-    if (layerId && layerReady) {
-      const featureId = featureLookupRef.current.get(selectedResort.name);
-      if (featureId != null) {
-        controller
-          .selectFeature({ id: featureId, layerId, showPopup: false })
-          .catch((err) => console.warn("[FeltMap] selectFeature error:", err));
-      }
-    }
-
-    // Pan so the resort sits at 30% from left, 20% from top
     const el = containerRef.current;
     if (!el) return;
 
     const { clientWidth: w, clientHeight: h } = el;
+    const layerId = layerIdRef.current;
 
-    controller
-      .getViewport()
-      .then(() => {
-        const center = offsetCenter(
-          selectedResort.latitude,
-          selectedResort.longitude,
-          12,
-          w,
-          h,
-          0.3,
-          0.2,
-        );
-        return controller.setViewport({ center, zoom: 12 });
-      })
-      .catch(() => {
-        // Fallback without current zoom info
-        const center = offsetCenter(
-          selectedResort.latitude,
-          selectedResort.longitude,
-          12,
-          w,
-          h,
-          0.3,
-          0.2,
-        );
-        controller.setViewport({ center, zoom: 12 }).catch(() => {});
-      });
+    async function panAndSelect() {
+      // 1. Pan to offset position first
+      const center = offsetCenter(
+        selectedResort!.latitude,
+        selectedResort!.longitude,
+        12,
+        w,
+        h,
+        0.3,
+        0.2,
+      );
+      await controller!.setViewport({ center, zoom: 12 });
+
+      // 2. Then highlight the marker — fitViewport explicitly false so it doesn't override
+      if (layerId && layerReady) {
+        const featureId = featureLookupRef.current.get(selectedResort!.name);
+        if (featureId != null) {
+          await controller!.selectFeature({
+            id: featureId,
+            layerId,
+            showPopup: false,
+            fitViewport: false,
+          });
+        }
+      }
+    }
+
+    panAndSelect().catch(() => {});
   }, [selectedResort, layerReady]);
 
   if (!FELT_MAP_ID) {
