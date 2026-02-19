@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Resort, COLOR_MAP } from "@/types";
 import { resorts as allResorts } from "@/data/resorts";
+import { powderhoundsData } from "@/data/powderhounds";
 import { wikiThumb } from "@/lib/wikiThumb";
 import { lngLatToPixel, type Viewport } from "@/lib/geoProject";
 import {
@@ -17,6 +18,7 @@ import {
   CalendarOff,
   Ticket,
   CheckCircle,
+  ChevronDown,
 } from "lucide-react";
 
 /* ── Helpers (shared logic with ResortCard) ──────────────── */
@@ -39,10 +41,31 @@ function getSharedBankResorts(resort: Resort): Resort[] {
   );
 }
 
-function getPowderhoundsUrl(resort: Resort): string {
-  const q = encodeURIComponent(`powderhounds ${resort.name} ski resort`);
-  return `https://www.google.com/search?q=${q}&btnI`;
+/* ── Stat cell ─────────────────────────────────────────── */
+
+function StatCell({ label, value }: { label: string; value: string | null }) {
+  return (
+    <div>
+      <div className="text-[10px] font-semibold uppercase tracking-wider text-muted">
+        {label}
+      </div>
+      <div className="text-[13px] font-semibold text-foreground">
+        {value || "—"}
+      </div>
+    </div>
+  );
 }
+
+/* ── Info tab types ────────────────────────────────────── */
+
+type InfoTab = "overview" | "pros-cons" | "terrain" | "snow";
+
+const TABS: { id: InfoTab; label: string }[] = [
+  { id: "overview", label: "Overview" },
+  { id: "pros-cons", label: "Pros & Cons" },
+  { id: "terrain", label: "Terrain" },
+  { id: "snow", label: "Snow History" },
+];
 
 /* ── Pass Day Card ───────────────────────────────────────── */
 
@@ -75,7 +98,7 @@ function PassDayCard({ label, value }: { label: string; value: string }) {
 
 /* ── Positioning logic ───────────────────────────────────── */
 
-const PANEL_W = 400;
+const PANEL_W = 460;
 const EDGE_PAD = 8;
 const MARKER_GAP = 16;
 const TRIANGLE_DEFAULT = 30;
@@ -135,6 +158,11 @@ export function ResortDetailPanel({
   const sharedBank = getSharedBankResorts(resort);
   const [imgError, setImgError] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [infoOpen, setInfoOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<InfoTab>("overview");
+
+  const phData = powderhoundsData[resort.id] ?? null;
+  const phUrl = resort.powderhoundsUrl;
 
   // Reset image error state when resort changes
   useEffect(() => {
@@ -193,7 +221,7 @@ export function ResortDetailPanel({
       aria-labelledby="resort-detail-name"
       className={`
         absolute z-20
-        ${hasAnchor ? "w-[400px]" : "w-full md:w-[400px] bottom-0 md:bottom-4 left-0 md:left-4"}
+        ${hasAnchor ? "w-[460px]" : "w-full md:w-[460px] bottom-0 md:bottom-4 left-0 md:left-4"}
         transition-opacity duration-200 ease-out
         ${isVisible ? "opacity-100" : "opacity-0"}
       `}
@@ -349,18 +377,184 @@ export function ResortDetailPanel({
             </div>
           )}
 
-          {/* Powderhounds link */}
-          {resort.powderhoundsUrl && (
-            <a
-              href={resort.powderhoundsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg border border-border py-2.5 text-sm font-medium text-foreground hover:bg-surface-hover hover:border-ikon/30 transition-colors"
-            >
-              <ExternalLink className="h-4 w-4 text-ikon" />
-              View on Powderhounds
-            </a>
-          )}
+          {/* Resort Info accordion */}
+          <button
+            onClick={() => setInfoOpen(!infoOpen)}
+            className="mt-4 flex w-full items-center justify-between text-xs font-semibold uppercase tracking-wider text-muted hover:text-foreground transition-colors"
+          >
+            <span>Resort Info</span>
+            <ChevronDown
+              className={`h-3.5 w-3.5 transition-transform duration-200 ${
+                infoOpen ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+
+          <div
+            className={`overflow-hidden transition-all duration-200 ease-out ${
+              infoOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
+            }`}
+          >
+            {infoOpen && (
+              <div className="mt-2 rounded-lg border border-border bg-background/50 p-3">
+                {/* Tab navigation */}
+                <div className="flex gap-1 mb-3">
+                  {TABS.map((tab) => (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`px-2.5 py-1 rounded text-[11px] font-semibold uppercase tracking-wider transition-colors ${
+                        activeTab === tab.id
+                          ? "bg-ikon/20 text-ikon"
+                          : "text-muted hover:text-foreground"
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Tab content */}
+                <div className="min-h-[80px]">
+                  {activeTab === "overview" && (
+                    <>
+                      {phData?.description ? (
+                        <p className="text-[12px] text-muted/90 leading-relaxed whitespace-pre-line">
+                          {phData.description}
+                        </p>
+                      ) : phUrl ? (
+                        <a
+                          href={phUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[12px] text-ikon hover:underline inline-flex items-center gap-1"
+                        >
+                          Full resort review available on Powderhounds
+                          <ExternalLink className="h-3 w-3" />
+                        </a>
+                      ) : (
+                        <p className="text-[12px] text-muted/50 italic">
+                          No resort overview available yet.
+                        </p>
+                      )}
+                    </>
+                  )}
+
+                  {activeTab === "pros-cons" && (
+                    <>
+                      {phData && (phData.pros.length > 0 || phData.cons.length > 0) ? (
+                        <div className="space-y-3">
+                          <div className="grid grid-cols-2 gap-3">
+                            {phData.pros.length > 0 && (
+                              <div className="border-l-2 border-emerald-500/40 pl-2 space-y-1">
+                                {phData.pros.map((item, i) => (
+                                  <div key={i} className="text-[11px] text-emerald-400 leading-snug">
+                                    <span className="mr-1">&#10003;</span>
+                                    {item}
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                            {phData.cons.length > 0 && (
+                              <div className="border-l-2 border-rose-500/40 pl-2 space-y-1">
+                                {phData.cons.map((item, i) => (
+                                  <div key={i} className="text-[11px] text-rose-400 leading-snug">
+                                    <span className="mr-1">&#10007;</span>
+                                    {item}
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                          {phData.proOrCon.length > 0 && (
+                            <div className="border-l-2 border-amber-500/40 pl-2 space-y-1">
+                              {phData.proOrCon.map((item, i) => (
+                                <div key={i} className="text-[11px] text-amber-400 leading-snug">
+                                  <span className="mr-1">&hArr;</span>
+                                  {item}
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ) : phUrl ? (
+                        <a
+                          href={phUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[12px] text-ikon hover:underline inline-flex items-center gap-1"
+                        >
+                          See full review on Powderhounds for pros &amp; cons
+                          <ExternalLink className="h-3 w-3" />
+                        </a>
+                      ) : (
+                        <p className="text-[12px] text-muted/50 italic">
+                          No pros &amp; cons data available.
+                        </p>
+                      )}
+                    </>
+                  )}
+
+                  {activeTab === "terrain" && (
+                    <>
+                      {phData?.terrainStats && (phData.terrainStats.runs || phData.terrainStats.beginner || phData.terrainStats.vertical || phData.terrainStats.lifts) ? (
+                        <div className="space-y-3">
+                          <div className="grid grid-cols-3 gap-3">
+                            <StatCell label="Runs" value={phData.terrainStats.runs} />
+                            <StatCell label="Longest Run" value={phData.terrainStats.longestRun} />
+                            <StatCell label="Season" value={phData.terrainStats.season} />
+                          </div>
+                          <div className="grid grid-cols-3 gap-3">
+                            <StatCell label="Beginner" value={phData.terrainStats.beginner} />
+                            <StatCell label="Intermediate" value={phData.terrainStats.intermediate} />
+                            <StatCell label="Advanced" value={phData.terrainStats.advanced} />
+                          </div>
+                          {(phData.terrainStats.vertical || phData.terrainStats.lifts || phData.terrainStats.snowfall) && (
+                            <div className="grid grid-cols-3 gap-3">
+                              <StatCell label="Vertical" value={phData.terrainStats.vertical} />
+                              <StatCell label="Lifts" value={phData.terrainStats.lifts} />
+                              <StatCell label="Snowfall" value={phData.terrainStats.snowfall} />
+                            </div>
+                          )}
+                        </div>
+                      ) : phUrl ? (
+                        <a
+                          href={phUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[12px] text-ikon hover:underline inline-flex items-center gap-1"
+                        >
+                          See terrain stats on Powderhounds
+                          <ExternalLink className="h-3 w-3" />
+                        </a>
+                      ) : (
+                        <p className="text-[12px] text-muted/50 italic">
+                          No terrain data available.
+                        </p>
+                      )}
+                    </>
+                  )}
+
+                  {activeTab === "snow" && (
+                    <p className="text-[12px] text-muted/50 italic">Coming soon</p>
+                  )}
+                </div>
+
+                {/* Footer link */}
+                {phUrl && (
+                  <a
+                    href={phUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 flex items-center justify-center gap-1.5 rounded-md border border-border py-1.5 text-[11px] font-medium text-ikon hover:bg-surface-hover transition-colors"
+                  >
+                    <ExternalLink className="h-3 w-3" />
+                    View full review on Powderhounds
+                  </a>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

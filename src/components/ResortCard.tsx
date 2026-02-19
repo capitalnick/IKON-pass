@@ -245,84 +245,85 @@ export function ResortCard({
             </div>
           )}
 
-          {/* Resort Info accordion toggle */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setInfoOpen(!infoOpen);
-            }}
-            className="mt-2 flex w-full items-center justify-between text-[11px] font-semibold uppercase tracking-wider text-muted hover:text-foreground transition-colors"
-          >
-            <span>Resort Info</span>
-            <ChevronDown
-              className={`h-3 w-3 transition-transform duration-200 ${
-                infoOpen ? "rotate-180" : ""
-              }`}
-            />
-          </button>
+        </div>
+      </div>
 
-          {/* Accordion content */}
+      {/* Resort Info accordion toggle — full width below thumbnail row */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          setInfoOpen(!infoOpen);
+        }}
+        className="mt-2 flex w-full items-center justify-between text-[11px] font-semibold uppercase tracking-wider text-muted hover:text-foreground transition-colors"
+      >
+        <span>Resort Info</span>
+        <ChevronDown
+          className={`h-3 w-3 transition-transform duration-200 ${
+            infoOpen ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+
+      {/* Accordion content — full width */}
+      <div
+        className={`overflow-hidden transition-all duration-200 ease-out ${
+          infoOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        {infoOpen && (
           <div
-            className={`overflow-hidden transition-all duration-200 ease-out ${
-              infoOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
-            }`}
+            className="mt-2 rounded-lg border border-border bg-background/50 p-3"
+            onClick={(e) => e.stopPropagation()}
           >
-            {infoOpen && (
-              <div
-                className="mt-2 rounded-lg border border-border bg-background/50 p-3"
+            {/* Tab navigation */}
+            <div className="flex gap-1 mb-3">
+              {TABS.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setActiveTab(tab.id);
+                  }}
+                  className={`px-2 py-1 rounded text-[10px] font-semibold uppercase tracking-wider transition-colors ${
+                    activeTab === tab.id
+                      ? "bg-ikon/20 text-ikon"
+                      : "text-muted hover:text-foreground"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Tab content */}
+            <div className="min-h-[80px]">
+              {activeTab === "overview" && (
+                <OverviewTab phData={phData} phUrl={phUrl} />
+              )}
+              {activeTab === "pros-cons" && (
+                <ProsConsTab phData={phData} phUrl={phUrl} />
+              )}
+              {activeTab === "terrain" && (
+                <TerrainTab phData={phData} phUrl={phUrl} />
+              )}
+              {activeTab === "snow" && <SnowTab />}
+            </div>
+
+            {/* Footer link */}
+            {phUrl && (
+              <a
+                href={phUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
+                className="mt-3 flex items-center justify-center gap-1.5 rounded-md border border-border py-1.5 text-[11px] font-medium text-ikon hover:bg-surface-hover transition-colors"
               >
-                {/* Tab navigation */}
-                <div className="flex gap-1 mb-3">
-                  {TABS.map((tab) => (
-                    <button
-                      key={tab.id}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveTab(tab.id);
-                      }}
-                      className={`px-2 py-1 rounded text-[10px] font-semibold uppercase tracking-wider transition-colors ${
-                        activeTab === tab.id
-                          ? "bg-ikon/20 text-ikon"
-                          : "text-muted hover:text-foreground"
-                      }`}
-                    >
-                      {tab.label}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Tab content */}
-                <div className="min-h-[80px]">
-                  {activeTab === "overview" && (
-                    <OverviewTab phData={phData} phUrl={phUrl} />
-                  )}
-                  {activeTab === "pros-cons" && (
-                    <ProsConsTab phData={phData} phUrl={phUrl} />
-                  )}
-                  {activeTab === "terrain" && (
-                    <TerrainTab phData={phData} phUrl={phUrl} />
-                  )}
-                  {activeTab === "snow" && <SnowTab />}
-                </div>
-
-                {/* Footer link */}
-                {phUrl && (
-                  <a
-                    href={phUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="mt-3 flex items-center justify-center gap-1.5 rounded-md border border-border py-1.5 text-[11px] font-medium text-ikon hover:bg-surface-hover transition-colors"
-                  >
-                    <ExternalLink className="h-3 w-3" />
-                    View full review
-                  </a>
-                )}
-              </div>
+                <ExternalLink className="h-3 w-3" />
+                View full review
+              </a>
             )}
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
