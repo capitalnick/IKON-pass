@@ -120,6 +120,39 @@ function buildFeltFilter(filteredResorts: Resort[], totalCount: number): FeltFil
   return ["name", "in", filteredResorts.map((r) => r.name)];
 }
 
+/* ── Compute offset center so a point appears at a fractional screen position ── */
+const TILE = 256;
+
+function offsetCenter(
+  lat: number,
+  lng: number,
+  zoom: number,
+  containerW: number,
+  containerH: number,
+  fracX: number, // 0.3 = 30% from left
+  fracY: number, // 0.2 = 20% from top
+): { latitude: number; longitude: number } {
+  const scale = TILE * Math.pow(2, zoom);
+
+  // Forward-project the target point to world pixels
+  const pxX = ((lng + 180) / 360) * scale;
+  const sinLat = Math.sin((lat * Math.PI) / 180);
+  const pxY =
+    (0.5 - Math.log((1 + sinLat) / (1 - sinLat)) / (4 * Math.PI)) * scale;
+
+  // Shift so the point lands at (fracX, fracY) instead of (0.5, 0.5)
+  const cX = pxX + containerW * (0.5 - fracX);
+  const cY = pxY + containerH * (0.5 - fracY);
+
+  // Inverse-project back to lat/lng
+  const cLng = (cX / scale) * 360 - 180;
+  const n = 0.5 - cY / scale;
+  const e = Math.exp(n * 4 * Math.PI);
+  const cLat = Math.asin((e - 1) / (e + 1)) * (180 / Math.PI);
+
+  return { latitude: cLat, longitude: cLng };
+}
+
 /* ── Resort name → Resort lookup ──────────────────────────── */
 const resortByName = new Map<string, Resort>();
 for (const r of allResorts) {
@@ -307,37 +340,56 @@ export function FeltMap({
       .catch((err) => console.warn("[FeltMap] setLayerFilters error:", err));
   }, [filteredResorts, layerReady]);
 
-  // Select feature on resort click (highlight marker, pan map)
+  // Select feature on resort click (highlight marker, pan to offset position)
   useEffect(() => {
-    const layerId = layerIdRef.current;
-    if (!feltRef.current || !selectedResort) return;
+    const controller = feltRef.current;
+    if (!controller || !selectedResort) return;
 
+    const layerId = layerIdRef.current;
+
+    // Highlight the marker without auto-panning
     if (layerId && layerReady) {
       const featureId = featureLookupRef.current.get(selectedResort.name);
-
       if (featureId != null) {
-        feltRef.current
-          .selectFeature({
-            id: featureId,
-            layerId,
-            showPopup: false,
-            fitViewport: { maxZoom: 10 },
-          })
+        controller
+          .selectFeature({ id: featureId, layerId, showPopup: false })
           .catch((err) => console.warn("[FeltMap] selectFeature error:", err));
-        return;
       }
     }
 
-    // Fallback: just pan to resort coordinates
-    feltRef.current
-      .setViewport({
-        center: {
-          latitude: selectedResort.latitude,
-          longitude: selectedResort.longitude,
-        },
-        zoom: 10,
+    // Pan so the resort sits at 30% from left, 20% from top
+    const el = containerRef.current;
+    if (!el) return;
+
+    const { clientWidth: w, clientHeight: h } = el;
+
+    controller
+      .getViewport()
+      .then(() => {
+        const center = offsetCenter(
+          selectedResort.latitude,
+          selectedResort.longitude,
+          12,
+          w,
+          h,
+          0.3,
+          0.2,
+        );
+        return controller.setViewport({ center, zoom: 12 });
       })
-      .catch(() => {});
+      .catch(() => {
+        // Fallback without current zoom info
+        const center = offsetCenter(
+          selectedResort.latitude,
+          selectedResort.longitude,
+          12,
+          w,
+          h,
+          0.3,
+          0.2,
+        );
+        controller.setViewport({ center, zoom: 12 }).catch(() => {});
+      });
   }, [selectedResort, layerReady]);
 
   if (!FELT_MAP_ID) {
