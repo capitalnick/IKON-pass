@@ -178,6 +178,7 @@ export function Sidebar({
             <div className="mt-1.5 space-y-0.5">
               {filters.dayBankGroups.map((key) => {
                 const g = DAY_BANK_GROUPS[key];
+                if (!g) return null;
                 return (
                   <p key={key} className="text-[10px] text-muted">
                     <span className="text-foreground/70">{g.label}:</span>{" "}
