@@ -102,6 +102,7 @@ interface FeltController {
 /* ── Props ────────────────────────────────────────────────── */
 interface FeltMapProps {
   filters: Filters;
+  filteredResorts: Resort[];
   selectedResort: Resort | null;
   onResortSelect?: (resort: Resort) => void;
   onViewportChange?: (viewport: Viewport) => void;
@@ -109,40 +110,14 @@ interface FeltMapProps {
 }
 
 /* ── Build Felt-compatible filter from sidebar state ──────── */
-function buildFeltFilter(filters: Filters): FeltFilter {
-  const conditions: FeltFilterExpr[] = [];
+function buildFeltFilter(filteredResorts: Resort[], totalCount: number): FeltFilter {
+  // If all resorts pass the filter, no Felt filter needed
+  if (filteredResorts.length === totalCount) return null;
+  // If no resorts pass, use an impossible condition
+  if (filteredResorts.length === 0) return ["name", "eq", "__none__"];
 
-  if (filters.macroRegions.length > 0) {
-    conditions.push(["macro_region", "in", filters.macroRegions]);
-  }
-
-  // dayBankGroup filtering is handled client-side by applyFilters
-
-  if (filters.newOnly) {
-    conditions.push(["new_2526", "eq", "Y"]);
-  }
-
-  if (filters.passType === "full-only") {
-    conditions.push(["full_pass_days", "ne", "N/A"]);
-  }
-
-  if (filters.passType === "base-included") {
-    conditions.push(["base_pass_days", "ne", "N/A"]);
-  }
-
-  if (filters.search) {
-    conditions.push(["name", "cn", filters.search]);
-  }
-
-  if (conditions.length === 0) return null;
-  if (conditions.length === 1) return conditions[0];
-
-  // Build right-associative AND tree
-  let result: FeltFilter = conditions[conditions.length - 1];
-  for (let i = conditions.length - 2; i >= 0; i--) {
-    result = [conditions[i], "and", result];
-  }
-  return result;
+  // Use a name "in" filter to sync the Felt map with the sidebar's filtered list
+  return ["name", "in", filteredResorts.map((r) => r.name)];
 }
 
 /* ── Resort name → Resort lookup ──────────────────────────── */
@@ -154,6 +129,7 @@ for (const r of allResorts) {
 /* ── Component ────────────────────────────────────────────── */
 export function FeltMap({
   filters,
+  filteredResorts,
   selectedResort,
   onResortSelect,
   onViewportChange,
@@ -316,14 +292,14 @@ export function FeltMap({
     const layerId = layerIdRef.current;
     if (!feltRef.current || !layerId || !layerReady) return;
 
-    const feltFilter = buildFeltFilter(filters);
-    console.log("[FeltMap] Applying filter:", JSON.stringify(feltFilter));
+    const feltFilter = buildFeltFilter(filteredResorts, allResorts.length);
+    console.log("[FeltMap] Applying filter:", feltFilter ? "name in [" + filteredResorts.length + " resorts]" : "none");
 
     feltRef.current
       .setLayerFilters({ layerId, filters: feltFilter })
       .then(() => console.log("[FeltMap] Filter applied"))
       .catch((err) => console.warn("[FeltMap] setLayerFilters error:", err));
-  }, [filters, layerReady]);
+  }, [filteredResorts, layerReady]);
 
   // Select feature on resort click (highlight marker, pan map)
   useEffect(() => {

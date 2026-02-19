@@ -103,6 +103,7 @@ export function MapLayout() {
 
         <FeltMap
           filters={filters}
+          filteredResorts={filtered}
           selectedResort={selectedResort}
           onResortSelect={handleResortClick}
           onViewportChange={setViewport}
