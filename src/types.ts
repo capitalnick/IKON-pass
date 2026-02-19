@@ -83,6 +83,12 @@ export const DAY_BANK_GROUPS: Record<string, { label: string; resortCount: numbe
     fullDays: "7 shared",
     baseDays: "5 shared",
   },
+  "Killington & Pico": {
+    label: "Killington & Pico",
+    resortCount: 2,
+    fullDays: "7 shared",
+    baseDays: "5 shared",
+  },
 };
 
 export const DAY_BANK_COLOR_MAP: Record<string, string> = {
@@ -92,6 +98,7 @@ export const DAY_BANK_COLOR_MAP: Record<string, string> = {
   "Alta & Snowbird": "#00E5FF",
   "SkiBig3": "#7B61FF",
   "NZ Super Pass": "#FF9F1C",
+  "Killington & Pico": "#FF69B4",
   "Individual": "#4A5568",
 };
 
