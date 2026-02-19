@@ -85,6 +85,16 @@ export const DAY_BANK_GROUPS: Record<string, { label: string; resortCount: numbe
   },
 };
 
+export const DAY_BANK_COLOR_MAP: Record<string, string> = {
+  "Dolomiti Superski": "#FF4D4D",
+  "Valle d'Aosta": "#00E676",
+  "Aspen Snowmass": "#FFDD00",
+  "Alta & Snowbird": "#00E5FF",
+  "SkiBig3": "#7B61FF",
+  "NZ Super Pass": "#FF9F1C",
+  "Individual": "#4A5568",
+};
+
 export const MACRO_REGIONS = [
   "Europe",
   "USA",

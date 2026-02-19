@@ -1,16 +1,8 @@
 "use client";
 
-import { Resort, Filters, COLOR_MAP, DAY_BANK_GROUPS, MACRO_REGIONS } from "@/types";
-import { resorts as allResorts } from "@/data/resorts";
+import { Resort, Filters, DAY_BANK_GROUPS, DAY_BANK_COLOR_MAP, MACRO_REGIONS } from "@/types";
 import { ResortCard } from "./ResortCard";
 import { Mountain } from "lucide-react";
-
-/** Derive the map marker color for each day bank group from the first resort in that group */
-const dayBankColors: Record<string, string> = {};
-for (const [key] of Object.entries(DAY_BANK_GROUPS)) {
-  const first = allResorts.find((r) => r.dayBankGroup === key);
-  dayBankColors[key] = first ? (COLOR_MAP[first.colorGroup] ?? "#888") : "#888";
-}
 
 interface SidebarProps {
   resorts: Resort[];
@@ -154,7 +146,7 @@ export function Sidebar({
               >
                 <span
                   className="inline-block h-2.5 w-2.5 rounded-full flex-shrink-0"
-                  style={{ backgroundColor: dayBankColors[key] }}
+                  style={{ backgroundColor: DAY_BANK_COLOR_MAP[key] }}
                 />
                 <span>{group.label}</span>
                 <span className={`text-[10px] ${filters.dayBankGroups.includes(key) ? "text-foreground/50" : "text-muted/60"}`}>
@@ -173,7 +165,8 @@ export function Sidebar({
               }`}
             >
               <span
-                className="inline-block h-2.5 w-2.5 rounded-full flex-shrink-0 bg-muted/40"
+                className="inline-block h-2.5 w-2.5 rounded-full flex-shrink-0"
+                style={{ backgroundColor: DAY_BANK_COLOR_MAP["Individual"] }}
               />
               <span>Individual</span>
               <span className={`text-[10px] ${filters.dayBankGroups.includes("Individual") ? "text-foreground/50" : "text-muted/60"}`}>
