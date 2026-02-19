@@ -14,13 +14,14 @@ export interface Resort {
   reservationRequired: boolean;
   blackoutDates: string;
   fullPassOnly: boolean;
+  dayBankGroup: string | null;
   powderhoundsUrl: string | null;
   imageUrl?: string;
 }
 
 export interface Filters {
   macroRegions: string[];
-  colorGroups: string[];
+  dayBankGroup: string | null;
   passType: "all" | "full-only" | "base-included";
   newOnly: boolean;
   noBlackouts: boolean;
@@ -43,6 +44,45 @@ export const COLOR_MAP: Record<string, string> = {
   "Australia / New Zealand": "#06D6A0",
   Japan: "#EF476F",
   "Asia - Other": "#FFD166",
+};
+
+export const DAY_BANK_GROUPS: Record<string, { label: string; resortCount: number; fullDays: string; baseDays: string }> = {
+  "Dolomiti Superski": {
+    label: "Dolomiti Superski",
+    resortCount: 12,
+    fullDays: "7 shared",
+    baseDays: "5 shared",
+  },
+  "Valle d'Aosta": {
+    label: "Valle d'Aosta",
+    resortCount: 5,
+    fullDays: "7 shared",
+    baseDays: "5 shared",
+  },
+  "Aspen Snowmass": {
+    label: "Aspen Snowmass",
+    resortCount: 4,
+    fullDays: "7 shared",
+    baseDays: "N/A",
+  },
+  "Alta & Snowbird": {
+    label: "Alta & Snowbird",
+    resortCount: 2,
+    fullDays: "7 shared",
+    baseDays: "N/A",
+  },
+  "SkiBig3": {
+    label: "SkiBig3",
+    resortCount: 3,
+    fullDays: "7 shared",
+    baseDays: "5 shared",
+  },
+  "NZ Super Pass": {
+    label: "NZ Super Pass",
+    resortCount: 3,
+    fullDays: "7 shared",
+    baseDays: "5 shared",
+  },
 };
 
 export const MACRO_REGIONS = [

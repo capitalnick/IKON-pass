@@ -1,10 +1,8 @@
 "use client";
 
-import { Resort, Filters, COLOR_MAP, MACRO_REGIONS } from "@/types";
+import { Resort, Filters, DAY_BANK_GROUPS, MACRO_REGIONS } from "@/types";
 import { ResortCard } from "./ResortCard";
 import { Mountain } from "lucide-react";
-
-const colorGroups = Object.keys(COLOR_MAP);
 
 interface SidebarProps {
   resorts: Resort[];
@@ -46,7 +44,7 @@ export function Sidebar({
   const hasActiveFilters =
     filters.search !== "" ||
     filters.macroRegions.length > 0 ||
-    filters.colorGroups.length > 0 ||
+    filters.dayBankGroup !== null ||
     filters.passType !== "all" ||
     filters.newOnly ||
     filters.noBlackouts;
@@ -123,36 +121,40 @@ export function Sidebar({
           </div>
         </div>
 
-        {/* Ikon Group */}
+        {/* Day Bank */}
         <div>
           <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-muted">
-            Ikon Group
+            Shared Day Bank
           </label>
           <div className="flex flex-wrap gap-1.5">
-            {colorGroups.map((group) => (
+            {Object.entries(DAY_BANK_GROUPS).map(([key, group]) => (
               <button
-                key={group}
+                key={key}
                 onClick={() =>
-                  toggleArrayItem(
-                    filters.colorGroups,
-                    group,
-                    "colorGroups"
-                  )
+                  update({ dayBankGroup: filters.dayBankGroup === key ? null : key })
                 }
-                className={`flex items-center gap-1.5 rounded-md px-2 py-1 text-xs transition-colors ${
-                  filters.colorGroups.includes(group)
-                    ? "ring-1 ring-foreground bg-background text-foreground"
+                className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
+                  filters.dayBankGroup === key
+                    ? "bg-ikon text-white"
                     : "bg-background text-muted hover:text-foreground border border-border"
                 }`}
               >
-                <span
-                  className="inline-block h-2.5 w-2.5 rounded-full flex-shrink-0"
-                  style={{ backgroundColor: COLOR_MAP[group] }}
-                />
-                <span className="truncate max-w-[120px]">{group}</span>
+                <span>{group.label}</span>
+                <span className={`ml-1.5 text-[10px] ${filters.dayBankGroup === key ? "text-white/70" : "text-muted/60"}`}>
+                  {group.resortCount}
+                </span>
               </button>
             ))}
           </div>
+          {filters.dayBankGroup && (
+            <p className="mt-1.5 text-[10px] text-muted">
+              {DAY_BANK_GROUPS[filters.dayBankGroup].fullDays} Full Pass
+              {DAY_BANK_GROUPS[filters.dayBankGroup].baseDays !== "N/A"
+                ? ` · ${DAY_BANK_GROUPS[filters.dayBankGroup].baseDays} Base Pass`
+                : " · Not on Base Pass"}
+              {" "}across all {DAY_BANK_GROUPS[filters.dayBankGroup].resortCount} resorts
+            </p>
+          )}
         </div>
 
         {/* Pass Type + New Toggle */}
@@ -216,7 +218,7 @@ export function Sidebar({
             onClick={() =>
               onFiltersChange({
                 macroRegions: [],
-                colorGroups: [],
+                dayBankGroup: null,
                 passType: "all",
                 newOnly: false,
                 noBlackouts: false,

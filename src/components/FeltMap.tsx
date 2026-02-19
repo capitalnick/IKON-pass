@@ -116,9 +116,7 @@ function buildFeltFilter(filters: Filters): FeltFilter {
     conditions.push(["macro_region", "in", filters.macroRegions]);
   }
 
-  if (filters.colorGroups.length > 0) {
-    conditions.push(["ikon_group", "in", filters.colorGroups]);
-  }
+  // dayBankGroup filtering is handled client-side by applyFilters
 
   if (filters.newOnly) {
     conditions.push(["new_2526", "eq", "Y"]);

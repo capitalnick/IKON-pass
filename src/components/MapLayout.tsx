@@ -10,7 +10,7 @@ import type { Viewport } from "@/lib/geoProject";
 
 const defaultFilters: Filters = {
   macroRegions: [],
-  colorGroups: [],
+  dayBankGroup: null,
   passType: "all",
   newOnly: false,
   noBlackouts: false,
@@ -33,8 +33,8 @@ function applyFilters(allResorts: Resort[], filters: Filters): Resort[] {
       if (!filters.macroRegions.includes(r.macroRegion)) return false;
     }
 
-    if (filters.colorGroups.length > 0) {
-      if (!filters.colorGroups.includes(r.colorGroup)) return false;
+    if (filters.dayBankGroup !== null) {
+      if (r.dayBankGroup !== filters.dayBankGroup) return false;
     }
 
     if (filters.newOnly && !r.isNew) return false;
