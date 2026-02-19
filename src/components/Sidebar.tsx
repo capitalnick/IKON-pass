@@ -124,7 +124,7 @@ export function Sidebar({
         {/* Day Bank */}
         <div>
           <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-muted">
-            Shared Day Bank
+            Day Bank
           </label>
           <div className="flex flex-wrap gap-1.5">
             {Object.entries(DAY_BANK_GROUPS).map(([key, group]) => (
@@ -133,18 +133,40 @@ export function Sidebar({
                 onClick={() =>
                   toggleArrayItem(filters.dayBankGroups, key, "dayBankGroups")
                 }
-                className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
+                className={`flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
                   filters.dayBankGroups.includes(key)
-                    ? "bg-ikon text-white"
+                    ? "ring-1 ring-foreground bg-background text-foreground"
                     : "bg-background text-muted hover:text-foreground border border-border"
                 }`}
               >
+                <span
+                  className="inline-block h-2.5 w-2.5 rounded-full flex-shrink-0"
+                  style={{ backgroundColor: group.color }}
+                />
                 <span>{group.label}</span>
-                <span className={`ml-1.5 text-[10px] ${filters.dayBankGroups.includes(key) ? "text-white/70" : "text-muted/60"}`}>
+                <span className={`text-[10px] ${filters.dayBankGroups.includes(key) ? "text-foreground/50" : "text-muted/60"}`}>
                   {group.resortCount}
                 </span>
               </button>
             ))}
+            <button
+              onClick={() =>
+                toggleArrayItem(filters.dayBankGroups, "Individual", "dayBankGroups")
+              }
+              className={`flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
+                filters.dayBankGroups.includes("Individual")
+                  ? "ring-1 ring-foreground bg-background text-foreground"
+                  : "bg-background text-muted hover:text-foreground border border-border"
+              }`}
+            >
+              <span
+                className="inline-block h-2.5 w-2.5 rounded-full flex-shrink-0 bg-muted/40"
+              />
+              <span>Individual</span>
+              <span className={`text-[10px] ${filters.dayBankGroups.includes("Individual") ? "text-foreground/50" : "text-muted/60"}`}>
+                {totalCount - 29}
+              </span>
+            </button>
           </div>
           {filters.dayBankGroups.length > 0 && (
             <div className="mt-1.5 space-y-0.5">

@@ -34,7 +34,11 @@ function applyFilters(allResorts: Resort[], filters: Filters): Resort[] {
     }
 
     if (filters.dayBankGroups.length > 0) {
-      if (!r.dayBankGroup || !filters.dayBankGroups.includes(r.dayBankGroup)) return false;
+      const includesIndividual = filters.dayBankGroups.includes("Individual");
+      const bankFilters = filters.dayBankGroups.filter((g) => g !== "Individual");
+      const inBank = r.dayBankGroup && bankFilters.includes(r.dayBankGroup);
+      const isIndividual = !r.dayBankGroup && includesIndividual;
+      if (!inBank && !isIndividual) return false;
     }
 
     if (filters.newOnly && !r.isNew) return false;

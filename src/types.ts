@@ -46,39 +46,45 @@ export const COLOR_MAP: Record<string, string> = {
   "Asia - Other": "#FFD166",
 };
 
-export const DAY_BANK_GROUPS: Record<string, { label: string; resortCount: number; fullDays: string; baseDays: string }> = {
+export const DAY_BANK_GROUPS: Record<string, { label: string; color: string; resortCount: number; fullDays: string; baseDays: string }> = {
   "Dolomiti Superski": {
     label: "Dolomiti Superski",
+    color: "#2EC4B6",
     resortCount: 12,
     fullDays: "7 shared",
     baseDays: "5 shared",
   },
   "Valle d'Aosta": {
     label: "Valle d'Aosta",
+    color: "#57CC99",
     resortCount: 5,
     fullDays: "7 shared",
     baseDays: "5 shared",
   },
   "Aspen Snowmass": {
     label: "Aspen Snowmass",
+    color: "#3A86FF",
     resortCount: 4,
     fullDays: "7 shared",
     baseDays: "N/A",
   },
   "Alta & Snowbird": {
     label: "Alta & Snowbird",
+    color: "#3A86FF",
     resortCount: 2,
     fullDays: "7 shared",
     baseDays: "N/A",
   },
   "SkiBig3": {
     label: "SkiBig3",
+    color: "#FF006E",
     resortCount: 3,
     fullDays: "7 shared",
     baseDays: "5 shared",
   },
   "NZ Super Pass": {
     label: "NZ Super Pass",
+    color: "#06D6A0",
     resortCount: 3,
     fullDays: "7 shared",
     baseDays: "5 shared",
