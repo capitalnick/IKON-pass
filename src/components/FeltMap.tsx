@@ -174,11 +174,17 @@ export function FeltMap({
         feltRef.current = controller;
         setIsLoading(false);
 
-        // Seed initial viewport
+        // Set initial viewport to Alps center
         try {
-          const vp = await controller.getViewport();
+          await controller.setViewport({
+            center: { latitude: 46.142063893, longitude: 9.745402744 },
+            zoom: 6,
+          });
           if (!cancelled) {
-            onViewportChangeRef.current?.({ center: vp.center, zoom: vp.zoom });
+            onViewportChangeRef.current?.({
+              center: { latitude: 46.142063893, longitude: 9.745402744 },
+              zoom: 6,
+            });
           }
         } catch (_) {}
 
