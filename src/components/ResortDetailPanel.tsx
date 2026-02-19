@@ -7,6 +7,12 @@ import { powderhoundsData } from "@/data/powderhounds";
 import { wikiThumb } from "@/lib/wikiThumb";
 import { lngLatToPixel, type Viewport } from "@/lib/geoProject";
 import {
+  TripEntry,
+  PassType,
+  getResortAllowance,
+  isAvailableOnPass,
+} from "@/lib/tripUtils";
+import {
   Mountain,
   MapPin,
   CalendarDays,
@@ -19,6 +25,9 @@ import {
   Ticket,
   CheckCircle,
   ChevronDown,
+  Plus,
+  Minus,
+  AlertTriangle,
 } from "lucide-react";
 
 /* ── Helpers (shared logic with ResortCard) ──────────────── */
@@ -145,6 +154,10 @@ interface ResortDetailPanelProps {
   mapContainerRef: React.RefObject<HTMLDivElement | null>;
   onClose: () => void;
   onNavigate: (resort: Resort) => void;
+  trip: TripEntry[];
+  passType: PassType;
+  onAddToTrip: (resortId: string, days: number) => void;
+  onRemoveFromTrip: (resortId: string) => void;
 }
 
 export function ResortDetailPanel({
@@ -153,6 +166,10 @@ export function ResortDetailPanel({
   mapContainerRef,
   onClose,
   onNavigate,
+  trip,
+  passType,
+  onAddToTrip,
+  onRemoveFromTrip,
 }: ResortDetailPanelProps) {
   const color = COLOR_MAP[resort.colorGroup] ?? "#666";
   const sharedBank = getSharedBankResorts(resort);
@@ -164,9 +181,32 @@ export function ResortDetailPanel({
   const phData = powderhoundsData[resort.id] ?? null;
   const phUrl = resort.powderhoundsUrl;
 
-  // Reset image error state when resort changes
+  // Trip controls
+  const existingEntry = trip.find((e) => e.resortId === resort.id);
+  const [tripDays, setTripDays] = useState(existingEntry?.days ?? 1);
+  const allowance = getResortAllowance(resort, passType);
+  const available = isAvailableOnPass(resort, passType);
+  const isSharedBank = !!resort.dayBankGroup;
+
+  // Days already booked in the same shared bank (excluding this resort)
+  const bankDaysElsewhere = isSharedBank
+    ? trip
+        .filter((e) => {
+          const r = allResorts.find((x) => x.id === e.resortId);
+          return r && r.dayBankGroup === resort.dayBankGroup && e.resortId !== resort.id;
+        })
+        .reduce((sum, e) => sum + e.days, 0)
+    : 0;
+
+  const maxDays =
+    allowance === Infinity ? 99 : Math.max(1, allowance - bankDaysElsewhere);
+  const effectiveDays = Math.min(tripDays, allowance === Infinity ? tripDays : maxDays);
+
+  // Reset image error state and sync trip days when resort changes
   useEffect(() => {
     setImgError(false);
+    const entry = trip.find((e) => e.resortId === resort.id);
+    setTripDays(entry?.days ?? 1);
   }, [resort.id]);
 
   // Entrance animation
@@ -376,6 +416,90 @@ export function ResortDetailPanel({
               </div>
             </div>
           )}
+
+          {/* Add to Trip */}
+          <div className="mt-4 rounded-lg border border-border bg-background/50 p-3">
+            <div className="flex items-center gap-1.5 text-xs font-medium text-muted mb-2">
+              <CalendarDays className="h-3.5 w-3.5" />
+              Add to Trip
+              <span className="text-[10px] text-muted/60 ml-auto">
+                {passType === "full" ? "Full" : "Base"} Pass
+              </span>
+            </div>
+
+            {!available ? (
+              <div className="flex items-center gap-2 text-xs text-red-400 bg-red-400/10 rounded-lg px-3 py-2">
+                <AlertTriangle className="h-3.5 w-3.5 flex-shrink-0" />
+                Not available on the {passType === "full" ? "Full" : "Base"} Pass
+              </div>
+            ) : (
+              <div className="flex items-center gap-3">
+                {/* Day stepper */}
+                <div className="flex items-center gap-1 bg-surface rounded-lg border border-border px-1 py-1">
+                  <button
+                    onClick={() => setTripDays((d) => Math.max(1, d - 1))}
+                    disabled={tripDays <= 1}
+                    className="h-7 w-7 flex items-center justify-center rounded text-muted hover:text-foreground hover:bg-surface-hover disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                  >
+                    <Minus className="h-3 w-3" />
+                  </button>
+                  <span className="w-8 text-center text-sm font-semibold text-foreground tabular-nums">
+                    {effectiveDays}
+                  </span>
+                  <button
+                    onClick={() =>
+                      setTripDays((d) =>
+                        allowance === Infinity ? d + 1 : Math.min(maxDays, d + 1)
+                      )
+                    }
+                    disabled={allowance !== Infinity && effectiveDays >= maxDays}
+                    className="h-7 w-7 flex items-center justify-center rounded text-muted hover:text-foreground hover:bg-surface-hover disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                  >
+                    <Plus className="h-3 w-3" />
+                  </button>
+                </div>
+                <span className="text-xs text-muted">
+                  day{effectiveDays !== 1 ? "s" : ""}
+                  {allowance !== Infinity && (
+                    <span className="ml-1 text-muted/60">/ {allowance}</span>
+                  )}
+                </span>
+
+                <div className="ml-auto flex gap-2">
+                  {existingEntry ? (
+                    <>
+                      <button
+                        onClick={() => onRemoveFromTrip(resort.id)}
+                        className="px-2.5 py-1.5 rounded-lg text-xs font-medium text-red-400 border border-red-400/30 hover:bg-red-400/10 transition-colors"
+                      >
+                        Remove
+                      </button>
+                      <button
+                        onClick={() => onAddToTrip(resort.id, effectiveDays)}
+                        className="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-ikon text-white hover:bg-ikon/90 transition-colors"
+                      >
+                        Update
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      onClick={() => onAddToTrip(resort.id, effectiveDays)}
+                      className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-ikon text-white hover:bg-ikon/90 transition-colors flex items-center gap-1.5"
+                    >
+                      <Plus className="h-3 w-3" />
+                      Add
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {isSharedBank && bankDaysElsewhere > 0 && (
+              <p className="mt-2 text-[10px] text-amber-400">
+                {bankDaysElsewhere}d already booked in {resort.dayBankGroup} bank
+              </p>
+            )}
+          </div>
 
           {/* Resort Info accordion */}
           <button

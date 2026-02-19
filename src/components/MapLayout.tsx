@@ -6,6 +6,8 @@ import { Filters, Resort } from "@/types";
 import { Sidebar } from "./Sidebar";
 import { FeltMap } from "./FeltMap";
 import { ResortDetailPanel } from "./ResortDetailPanel";
+import { TripPlanner } from "./TripPlanner";
+import { TripEntry, PassType } from "@/lib/tripUtils";
 import type { Viewport } from "@/lib/geoProject";
 
 const defaultFilters: Filters = {
@@ -63,10 +65,33 @@ export function MapLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const mapContainerRef = useRef<HTMLDivElement>(null);
 
+  // Trip state — all in-memory, purged on refresh
+  const [trip, setTrip] = useState<TripEntry[]>([]);
+  const [passType, setPassType] = useState<PassType>("full");
+
   const filtered = useMemo(() => applyFilters(resorts, filters), [filters]);
 
   const handleResortClick = useCallback((resort: Resort) => {
     setSelectedResort(resort);
+  }, []);
+
+  const handleAddToTrip = useCallback((resortId: string, days: number) => {
+    setTrip((prev) => {
+      const exists = prev.find((e) => e.resortId === resortId);
+      if (exists) {
+        return prev.map((e) => (e.resortId === resortId ? { ...e, days } : e));
+      }
+      return [...prev, { resortId, days }];
+    });
+  }, []);
+
+  const handleRemoveFromTrip = useCallback((resortId: string) => {
+    setTrip((prev) => prev.filter((e) => e.resortId !== resortId));
+  }, []);
+
+  const handleSelectResortById = useCallback((resortId: string) => {
+    const resort = resorts.find((r) => r.id === resortId);
+    if (resort) setSelectedResort(resort);
   }, []);
 
   return (
@@ -114,6 +139,15 @@ export function MapLayout() {
           mapContainerRef={mapContainerRef}
         />
 
+        {/* Trip Planner — top right */}
+        <TripPlanner
+          trip={trip}
+          passType={passType}
+          onPassTypeChange={setPassType}
+          onClearTrip={() => setTrip([])}
+          onSelectResort={handleSelectResortById}
+        />
+
         {/* Resort detail panel overlay */}
         {selectedResort && (
           <ResortDetailPanel
@@ -122,6 +156,10 @@ export function MapLayout() {
             mapContainerRef={mapContainerRef}
             onClose={() => setSelectedResort(null)}
             onNavigate={(r) => setSelectedResort(r)}
+            trip={trip}
+            passType={passType}
+            onAddToTrip={handleAddToTrip}
+            onRemoveFromTrip={handleRemoveFromTrip}
           />
         )}
       </div>
