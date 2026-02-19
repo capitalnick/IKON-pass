@@ -21,7 +21,7 @@ export interface Resort {
 
 export interface Filters {
   macroRegions: string[];
-  dayBankGroup: string | null;
+  dayBankGroups: string[];
   passType: "all" | "full-only" | "base-included";
   newOnly: boolean;
   noBlackouts: boolean;

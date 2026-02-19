@@ -44,7 +44,7 @@ export function Sidebar({
   const hasActiveFilters =
     filters.search !== "" ||
     filters.macroRegions.length > 0 ||
-    filters.dayBankGroup !== null ||
+    filters.dayBankGroups.length > 0 ||
     filters.passType !== "all" ||
     filters.newOnly ||
     filters.noBlackouts;
@@ -131,29 +131,35 @@ export function Sidebar({
               <button
                 key={key}
                 onClick={() =>
-                  update({ dayBankGroup: filters.dayBankGroup === key ? null : key })
+                  toggleArrayItem(filters.dayBankGroups, key, "dayBankGroups")
                 }
                 className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
-                  filters.dayBankGroup === key
+                  filters.dayBankGroups.includes(key)
                     ? "bg-ikon text-white"
                     : "bg-background text-muted hover:text-foreground border border-border"
                 }`}
               >
                 <span>{group.label}</span>
-                <span className={`ml-1.5 text-[10px] ${filters.dayBankGroup === key ? "text-white/70" : "text-muted/60"}`}>
+                <span className={`ml-1.5 text-[10px] ${filters.dayBankGroups.includes(key) ? "text-white/70" : "text-muted/60"}`}>
                   {group.resortCount}
                 </span>
               </button>
             ))}
           </div>
-          {filters.dayBankGroup && (
-            <p className="mt-1.5 text-[10px] text-muted">
-              {DAY_BANK_GROUPS[filters.dayBankGroup].fullDays} Full Pass
-              {DAY_BANK_GROUPS[filters.dayBankGroup].baseDays !== "N/A"
-                ? ` · ${DAY_BANK_GROUPS[filters.dayBankGroup].baseDays} Base Pass`
-                : " · Not on Base Pass"}
-              {" "}across all {DAY_BANK_GROUPS[filters.dayBankGroup].resortCount} resorts
-            </p>
+          {filters.dayBankGroups.length > 0 && (
+            <div className="mt-1.5 space-y-0.5">
+              {filters.dayBankGroups.map((key) => {
+                const g = DAY_BANK_GROUPS[key];
+                return (
+                  <p key={key} className="text-[10px] text-muted">
+                    <span className="text-foreground/70">{g.label}:</span>{" "}
+                    {g.fullDays} Full Pass
+                    {g.baseDays !== "N/A" ? ` · ${g.baseDays} Base Pass` : " · Not on Base Pass"}
+                    {" "}across {g.resortCount} resorts
+                  </p>
+                );
+              })}
+            </div>
           )}
         </div>
 
@@ -218,7 +224,7 @@ export function Sidebar({
             onClick={() =>
               onFiltersChange({
                 macroRegions: [],
-                dayBankGroup: null,
+                dayBankGroups: [],
                 passType: "all",
                 newOnly: false,
                 noBlackouts: false,
