@@ -16,6 +16,8 @@ interface TripPlannerProps {
   onPassTypeChange: (p: PassType) => void;
   onClearTrip: () => void;
   onSelectResort: (resortId: string) => void;
+  /** When true, renders as flat content inside a BottomSheet */
+  mobileSheet?: boolean;
 }
 
 function DayBar({
@@ -70,6 +72,7 @@ export function TripPlanner({
   onPassTypeChange,
   onClearTrip,
   onSelectResort,
+  mobileSheet = false,
 }: TripPlannerProps) {
   const [collapsed, setCollapsed] = useState(false);
 
@@ -77,66 +80,68 @@ export function TripPlanner({
   const hasTrip = trip.length > 0;
 
   return (
-    <div className="absolute top-4 right-4 z-20 w-[280px] rounded-xl border border-border bg-surface shadow-2xl">
-      {/* Header */}
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-border">
-        <svg
-          width="15"
-          height="15"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          className="text-ikon flex-shrink-0"
-        >
-          <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-          <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-        </svg>
-        <span className="flex-1 text-sm font-bold text-foreground">
-          Trip Planner
-        </span>
-        {hasTrip && (
-          <span
-            className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold ${
-              summary.hasAnyExceeded
-                ? "bg-red-500/20 text-red-400"
-                : "bg-ikon/20 text-ikon"
-            }`}
-          >
-            {summary.hasAnyExceeded && (
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
-              </svg>
-            )}
-            {summary.totalDays}d
-          </span>
-        )}
-        <button
-          onClick={() => setCollapsed((c) => !c)}
-          className="h-6 w-6 flex items-center justify-center rounded text-muted hover:text-foreground hover:bg-surface-hover transition-colors"
-          aria-label={collapsed ? "Expand" : "Collapse"}
-        >
+    <div className={mobileSheet ? "w-full" : "absolute top-4 right-4 z-20 w-[280px] rounded-xl border border-border bg-surface shadow-2xl"}>
+      {/* Header — hidden in mobile sheet (BottomSheet provides its own title) */}
+      {!mobileSheet && (
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-border">
           <svg
-            width="12"
-            height="12"
+            width="15"
+            height="15"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2.5"
-            className={`transition-transform ${collapsed ? "" : "rotate-180"}`}
+            strokeWidth="2"
+            className="text-ikon flex-shrink-0"
           >
-            <path d="M18 15l-6-6-6 6" />
+            <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
-        </button>
-      </div>
+          <span className="flex-1 text-sm font-bold text-foreground">
+            Trip Planner
+          </span>
+          {hasTrip && (
+            <span
+              className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold ${
+                summary.hasAnyExceeded
+                  ? "bg-red-500/20 text-red-400"
+                  : "bg-ikon/20 text-ikon"
+              }`}
+            >
+              {summary.hasAnyExceeded && (
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                </svg>
+              )}
+              {summary.totalDays}d
+            </span>
+          )}
+          <button
+            onClick={() => setCollapsed((c) => !c)}
+            className="h-6 w-6 flex items-center justify-center rounded text-muted hover:text-foreground hover:bg-surface-hover transition-colors"
+            aria-label={collapsed ? "Expand" : "Collapse"}
+          >
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              className={`transition-transform ${collapsed ? "" : "rotate-180"}`}
+            >
+              <path d="M18 15l-6-6-6 6" />
+            </svg>
+          </button>
+        </div>
+      )}
 
-      {!collapsed && (
+      {(!collapsed || mobileSheet) && (
         <>
           {/* Pass type toggle */}
           <div className="flex gap-1 px-3 py-2.5 border-b border-border">
             <button
               onClick={() => onPassTypeChange("full")}
-              className={`flex-1 rounded-lg py-1.5 text-xs font-semibold transition-colors ${
+              className={`flex-1 rounded-lg py-3 sm:py-1.5 text-xs font-semibold transition-colors ${
                 passType === "full"
                   ? "bg-ikon text-white"
                   : "text-muted hover:text-foreground hover:bg-surface-hover"
@@ -146,7 +151,7 @@ export function TripPlanner({
             </button>
             <button
               onClick={() => onPassTypeChange("base")}
-              className={`flex-1 rounded-lg py-1.5 text-xs font-semibold transition-colors ${
+              className={`flex-1 rounded-lg py-3 sm:py-1.5 text-xs font-semibold transition-colors ${
                 passType === "base"
                   ? "bg-ikon text-white"
                   : "text-muted hover:text-foreground hover:bg-surface-hover"
@@ -224,7 +229,7 @@ function ResortRow({
   return (
     <button
       onClick={onClick}
-      className="w-full text-left px-4 py-2.5 hover:bg-surface-hover transition-colors"
+      className="w-full text-left px-4 py-4 sm:py-2.5 hover:bg-surface-hover transition-colors"
     >
       <div className="flex items-start gap-2">
         <div className="flex-1 min-w-0">
@@ -270,7 +275,7 @@ function SharedBankRow({
     <div className="border-b border-border last:border-0">
       <button
         onClick={() => setExpanded((e) => !e)}
-        className="w-full text-left px-4 py-2 hover:bg-surface-hover transition-colors"
+        className="w-full text-left px-4 py-3 sm:py-2 hover:bg-surface-hover transition-colors"
       >
         <div className="flex items-center gap-2">
           <svg

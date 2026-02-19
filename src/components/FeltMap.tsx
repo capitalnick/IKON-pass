@@ -107,6 +107,7 @@ interface FeltMapProps {
   onResortSelect?: (resort: Resort) => void;
   onViewportChange?: (viewport: Viewport) => void;
   mapContainerRef?: React.RefObject<HTMLDivElement | null>;
+  isMobile?: boolean;
 }
 
 /* ── Build Felt-compatible filter from sidebar state ──────── */
@@ -167,6 +168,7 @@ export function FeltMap({
   onResortSelect,
   onViewportChange,
   mapContainerRef,
+  isMobile = false,
 }: FeltMapProps) {
   const internalContainerRef = useRef<HTMLDivElement>(null);
   const containerRef = mapContainerRef ?? internalContainerRef;
@@ -199,7 +201,7 @@ export function FeltMap({
         if (cancelled || !containerRef.current) return;
 
         const map = await Felt.embed(containerRef.current, FELT_MAP_ID!, {
-          uiControls: { cooperativeGestures: false, showLegend: false },
+          uiControls: { cooperativeGestures: isMobile, showLegend: false },
         });
         if (cancelled) return;
 

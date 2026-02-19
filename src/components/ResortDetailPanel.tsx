@@ -158,6 +158,8 @@ interface ResortDetailPanelProps {
   passType: PassType;
   onAddToTrip: (resortId: string, days: number) => void;
   onRemoveFromTrip: (resortId: string) => void;
+  /** When true, renders as flat content inside a BottomSheet */
+  mobileSheet?: boolean;
 }
 
 export function ResortDetailPanel({
@@ -170,6 +172,7 @@ export function ResortDetailPanel({
   passType,
   onAddToTrip,
   onRemoveFromTrip,
+  mobileSheet = false,
 }: ResortDetailPanelProps) {
   const color = COLOR_MAP[resort.colorGroup] ?? "#666";
   const sharedBank = getSharedBankResorts(resort);
@@ -239,7 +242,7 @@ export function ResortDetailPanel({
 
   // Reproject resort lat/lng → screen pixels on every viewport change
   let position: PanelPosition | null = null;
-  if (viewport && mapContainerRef.current) {
+  if (!mobileSheet && viewport && mapContainerRef.current) {
     const rect = mapContainerRef.current.getBoundingClientRect();
     if (rect.width > 0 && rect.height > 0) {
       const pixel = lngLatToPixel(
@@ -254,6 +257,38 @@ export function ResortDetailPanel({
   }
 
   const hasAnchor = position != null;
+
+  if (mobileSheet) {
+    return (
+      <div className="w-full">
+        <MobileResortContent
+          resort={resort}
+          color={color}
+          sharedBank={sharedBank}
+          infoOpen={infoOpen}
+          setInfoOpen={setInfoOpen}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          phData={phData}
+          phUrl={phUrl}
+          onNavigate={onNavigate}
+          existingEntry={existingEntry}
+          tripDays={tripDays}
+          setTripDays={setTripDays}
+          effectiveDays={effectiveDays}
+          allowance={allowance}
+          available={available}
+          maxDays={maxDays}
+          passType={passType}
+          isSharedBank={isSharedBank}
+          bankDaysElsewhere={bankDaysElsewhere}
+          resort_id={resort.id}
+          onAddToTrip={onAddToTrip}
+          onRemoveFromTrip={onRemoveFromTrip}
+        />
+      </div>
+    );
+  }
 
   return (
     <div
@@ -681,6 +716,211 @@ export function ResortDetailPanel({
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+/* ── Mobile sheet content (flat, no positioning) ──────────── */
+
+function MobileResortContent({
+  resort,
+  color,
+  sharedBank,
+  infoOpen,
+  setInfoOpen,
+  activeTab,
+  setActiveTab,
+  phData,
+  phUrl,
+  onNavigate,
+  existingEntry,
+  tripDays,
+  setTripDays,
+  effectiveDays,
+  allowance,
+  available,
+  maxDays,
+  passType,
+  isSharedBank,
+  bankDaysElsewhere,
+  resort_id,
+  onAddToTrip,
+  onRemoveFromTrip,
+}: {
+  resort: Resort;
+  color: string;
+  sharedBank: Resort[];
+  infoOpen: boolean;
+  setInfoOpen: (v: boolean) => void;
+  activeTab: InfoTab;
+  setActiveTab: (t: InfoTab) => void;
+  phData: (typeof powderhoundsData)[string] | null;
+  phUrl: string | null;
+  onNavigate: (resort: Resort) => void;
+  existingEntry: TripEntry | undefined;
+  tripDays: number;
+  setTripDays: React.Dispatch<React.SetStateAction<number>>;
+  effectiveDays: number;
+  allowance: number;
+  available: boolean;
+  maxDays: number;
+  passType: PassType;
+  isSharedBank: boolean;
+  bankDaysElsewhere: number;
+  resort_id: string;
+  onAddToTrip: (resortId: string, days: number) => void;
+  onRemoveFromTrip: (resortId: string) => void;
+}) {
+  return (
+    <div className="px-5 py-3">
+      {/* Name + badge row */}
+      <div className="flex items-center gap-2 mb-1">
+        <div className="h-3 w-3 rounded-full flex-shrink-0" style={{ backgroundColor: color }} />
+        <h2 className="text-base font-bold text-foreground truncate">{resort.name}</h2>
+        {resort.isNew && (
+          <span className="flex-shrink-0 inline-flex items-center gap-0.5 rounded-full bg-ikon/15 px-1.5 py-0.5 text-[10px] font-bold uppercase text-ikon">
+            <Snowflake className="h-2.5 w-2.5" />
+            New
+          </span>
+        )}
+      </div>
+
+      {/* Location */}
+      <div className="flex items-center gap-1.5 text-sm text-muted mb-3">
+        <MapPin className="h-3.5 w-3.5 flex-shrink-0" />
+        <span>{resort.country}</span>
+        <span className="text-border">·</span>
+        <span>{resort.macroRegion}</span>
+      </div>
+
+      {/* Pass days */}
+      <div className="grid grid-cols-2 gap-3 mb-3">
+        <PassDayCard label="Full Pass" value={resort.fullPassDays} />
+        <PassDayCard label="Base Pass" value={resort.basePassDays} />
+      </div>
+
+      {/* Add to Trip */}
+      <div className="rounded-lg border border-border bg-background/50 p-3 mb-3">
+        <div className="flex items-center gap-1.5 text-xs font-medium text-muted mb-2">
+          <CalendarDays className="h-3.5 w-3.5" />
+          Add to Trip
+          <span className="text-[10px] text-muted/60 ml-auto">
+            {passType === "full" ? "Full" : "Base"} Pass
+          </span>
+        </div>
+
+        {!available ? (
+          <div className="flex items-center gap-2 text-xs text-red-400 bg-red-400/10 rounded-lg px-3 py-2">
+            <AlertTriangle className="h-3.5 w-3.5 flex-shrink-0" />
+            Not available on the {passType === "full" ? "Full" : "Base"} Pass
+          </div>
+        ) : (
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1 bg-surface rounded-lg border border-border px-1 py-1">
+              <button
+                onClick={() => setTripDays((d) => Math.max(1, d - 1))}
+                disabled={tripDays <= 1}
+                className="h-11 w-11 sm:h-7 sm:w-7 flex items-center justify-center rounded text-muted hover:text-foreground hover:bg-surface-hover disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              >
+                <Minus className="h-4 w-4 sm:h-3 sm:w-3" />
+              </button>
+              <span className="w-8 text-center text-sm font-semibold text-foreground tabular-nums">
+                {effectiveDays}
+              </span>
+              <button
+                onClick={() =>
+                  setTripDays((d) =>
+                    allowance === Infinity ? d + 1 : Math.min(maxDays, d + 1)
+                  )
+                }
+                disabled={allowance !== Infinity && effectiveDays >= maxDays}
+                className="h-11 w-11 sm:h-7 sm:w-7 flex items-center justify-center rounded text-muted hover:text-foreground hover:bg-surface-hover disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              >
+                <Plus className="h-4 w-4 sm:h-3 sm:w-3" />
+              </button>
+            </div>
+            <span className="text-xs text-muted">
+              day{effectiveDays !== 1 ? "s" : ""}
+              {allowance !== Infinity && (
+                <span className="ml-1 text-muted/60">/ {allowance}</span>
+              )}
+            </span>
+
+            <div className="ml-auto flex gap-2">
+              {existingEntry ? (
+                <>
+                  <button
+                    onClick={() => onRemoveFromTrip(resort_id)}
+                    className="px-3 py-2.5 sm:py-1.5 rounded-lg text-xs font-medium text-red-400 border border-red-400/30 hover:bg-red-400/10 transition-colors"
+                  >
+                    Remove
+                  </button>
+                  <button
+                    onClick={() => onAddToTrip(resort_id, effectiveDays)}
+                    className="px-3 py-2.5 sm:py-1.5 rounded-lg text-xs font-semibold bg-ikon text-white hover:bg-ikon/90 transition-colors"
+                  >
+                    Update
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={() => onAddToTrip(resort_id, effectiveDays)}
+                  className="px-4 py-2.5 sm:py-1.5 rounded-lg text-xs font-semibold bg-ikon text-white hover:bg-ikon/90 transition-colors flex items-center gap-1.5"
+                >
+                  <Plus className="h-3 w-3" />
+                  Add
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+
+        {isSharedBank && bankDaysElsewhere > 0 && (
+          <p className="mt-2 text-[10px] text-amber-400">
+            {bankDaysElsewhere}d already booked in {resort.dayBankGroup} bank
+          </p>
+        )}
+      </div>
+
+      {/* Access restrictions */}
+      <div className="flex flex-wrap gap-2 mb-3">
+        {resort.reservationRequired && (
+          <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/10 px-2.5 py-1 text-xs font-medium text-amber-400">
+            <Ticket className="h-3 w-3" />
+            Reservation required
+          </span>
+        )}
+        {resort.blackoutDates && (
+          <span className="inline-flex items-center gap-1 rounded-full bg-orange-500/10 px-2.5 py-1 text-xs font-medium text-orange-400">
+            <CalendarOff className="h-3 w-3" />
+            Blackouts: {resort.blackoutDates}
+          </span>
+        )}
+        {!resort.reservationRequired && !resort.fullPassOnly && !resort.blackoutDates && (
+          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-400">
+            <CheckCircle className="h-3 w-3" />
+            No restrictions
+          </span>
+        )}
+      </div>
+
+      {/* Shared bank links */}
+      {sharedBank.length > 0 && (
+        <div className="flex items-start gap-1.5 mb-3">
+          <Users className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-muted" />
+          <div className="flex flex-wrap gap-x-2 gap-y-1">
+            {sharedBank.map((r) => (
+              <button
+                key={r.id}
+                onClick={() => onNavigate(r)}
+                className="text-xs text-ikon hover:underline"
+              >
+                {r.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

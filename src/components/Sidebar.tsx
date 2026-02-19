@@ -21,6 +21,8 @@ interface SidebarProps {
   onResortClick: (resort: Resort) => void;
   onClose: () => void;
   isOpen: boolean;
+  /** When true, renders inside a BottomSheet — hides the close chevron button */
+  mobileSheet?: boolean;
 }
 
 export function Sidebar({
@@ -32,6 +34,7 @@ export function Sidebar({
   onResortClick,
   onClose,
   isOpen,
+  mobileSheet = false,
 }: SidebarProps) {
   if (!isOpen) return null;
 
@@ -58,7 +61,7 @@ export function Sidebar({
     filters.noBlackouts;
 
   return (
-    <aside className="flex h-full w-[380px] min-w-[380px] flex-col border-r border-border bg-surface">
+    <aside className="flex h-full w-full sm:w-[380px] sm:min-w-[380px] flex-col border-r border-border bg-surface">
       {/* Header */}
       <div className="flex items-center justify-between border-b border-border px-5 py-4">
         <div>
@@ -70,22 +73,24 @@ export function Sidebar({
             {resorts.length} / {totalCount} resorts
           </p>
         </div>
-        <button
-          onClick={onClose}
-          className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-surface-hover transition-colors"
-          aria-label="Close sidebar"
-        >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
+        {!mobileSheet && (
+          <button
+            onClick={onClose}
+            className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-surface-hover transition-colors"
+            aria-label="Close sidebar"
           >
-            <path d="M15 18l-6-6 6-6" />
-          </svg>
-        </button>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+        )}
       </div>
 
       {/* Search */}
@@ -106,7 +111,7 @@ export function Sidebar({
           <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-muted">
             Region
           </label>
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex gap-1.5 overflow-x-auto no-scrollbar sm:flex-wrap pb-1">
             {MACRO_REGIONS.map((region) => (
               <button
                 key={region}
@@ -117,7 +122,7 @@ export function Sidebar({
                     "macroRegions"
                   )
                 }
-                className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
+                className={`flex-shrink-0 rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
                   filters.macroRegions.includes(region)
                     ? "bg-ikon text-white"
                     : "bg-background text-muted hover:text-foreground border border-border"
@@ -134,14 +139,14 @@ export function Sidebar({
           <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-muted">
             Day Bank
           </label>
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex gap-1.5 overflow-x-auto no-scrollbar sm:flex-wrap pb-1">
             {Object.entries(DAY_BANK_GROUPS).map(([key, group]) => (
               <button
                 key={key}
                 onClick={() =>
                   toggleArrayItem(filters.dayBankGroups, key, "dayBankGroups")
                 }
-                className={`flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
+                className={`flex-shrink-0 flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
                   filters.dayBankGroups.includes(key)
                     ? "ring-1 ring-foreground bg-background text-foreground"
                     : "bg-background text-muted hover:text-foreground border border-border"
@@ -161,7 +166,7 @@ export function Sidebar({
               onClick={() =>
                 toggleArrayItem(filters.dayBankGroups, "Individual", "dayBankGroups")
               }
-              className={`flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
+              className={`flex-shrink-0 flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
                 filters.dayBankGroups.includes("Individual")
                   ? "ring-1 ring-foreground bg-background text-foreground"
                   : "bg-background text-muted hover:text-foreground border border-border"
@@ -206,7 +211,7 @@ export function Sidebar({
                   passType: e.target.value as Filters["passType"],
                 })
               }
-              className="w-full rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs text-foreground focus:border-ikon focus:outline-none"
+              className="w-full rounded-lg border border-border bg-background px-2.5 py-2.5 sm:py-1.5 text-xs text-foreground focus:border-ikon focus:outline-none"
             >
               <option value="all">All Passes</option>
               <option value="full-only">Full Pass Only</option>
@@ -221,7 +226,7 @@ export function Sidebar({
               </label>
               <button
                 onClick={() => update({ newOnly: !filters.newOnly })}
-                className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+                className={`rounded-lg px-3 py-2.5 sm:py-1.5 text-xs font-medium transition-colors ${
                   filters.newOnly
                     ? "bg-ikon text-white"
                     : "bg-background text-muted border border-border hover:text-foreground"
@@ -236,7 +241,7 @@ export function Sidebar({
               </label>
               <button
                 onClick={() => update({ noBlackouts: !filters.noBlackouts })}
-                className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+                className={`rounded-lg px-3 py-2.5 sm:py-1.5 text-xs font-medium transition-colors ${
                   filters.noBlackouts
                     ? "bg-ikon text-white"
                     : "bg-background text-muted border border-border hover:text-foreground"
